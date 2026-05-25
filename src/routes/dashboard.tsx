@@ -46,7 +46,7 @@ import {
   RadialBar,
   PolarAngleAxis,
 } from "recharts";
-import heroWaves from "@/assets/admin-hero-waves.jpg";
+
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — OKIKE" }] }),
@@ -391,12 +391,12 @@ function DashboardOverview({
                       <stop offset="100%" stopColor="oklch(0.72 0.15 55)" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <XAxis dataKey="date" tick={{ fontSize: 10, fill: "oklch(0.7 0.013 50 / 50%)" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 10, fill: "oklch(0.7 0.013 50 / 50%)" }} axisLine={false} tickLine={false} width={28} />
+                  <XAxis dataKey="date" tick={{ fontSize: 10, fill: "oklch(0.4 0.013 50 / 60%)" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 10, fill: "oklch(0.4 0.013 50 / 60%)" }} axisLine={false} tickLine={false} width={28} />
                   <Tooltip
-                    contentStyle={{ background: "oklch(0.22 0.013 50)", border: "1px solid oklch(1 0 0 / 10%)", borderRadius: 8, fontSize: 12 }}
-                    labelStyle={{ color: "oklch(0.7 0.013 50)" }}
-                    itemStyle={{ color: "oklch(0.95 0 0)" }}
+                    contentStyle={{ background: "oklch(1 0 0)", border: "1px solid oklch(0.196 0.013 50 / 10%)", borderRadius: 8, fontSize: 12 }}
+                    labelStyle={{ color: "oklch(0.4 0.013 50)" }}
+                    itemStyle={{ color: "oklch(0.196 0.013 50)" }}
                     formatter={(v) => [`${v} Users`, ""]}
                   />
                   <Area type="monotone" dataKey="users" stroke="oklch(0.72 0.15 55)" strokeWidth={2} fill="url(#gA)" />
@@ -546,7 +546,7 @@ function DashboardOverview({
               <ResponsiveContainer width="100%" height="100%">
                 <RadialBarChart innerRadius="75%" outerRadius="100%" data={productivityData} startAngle={90} endAngle={-270}>
                   <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
-                  <RadialBar dataKey="value" cornerRadius={20} background={{ fill: "oklch(0.22 0.013 50)" }} />
+                  <RadialBar dataKey="value" cornerRadius={20} background={{ fill: "oklch(0.92 0.005 80)" }} />
                 </RadialBarChart>
               </ResponsiveContainer>
               <div className="absolute inset-0 grid place-items-center text-lg font-semibold">76%</div>
@@ -559,7 +559,7 @@ function DashboardOverview({
           <div className="grid grid-cols-7 gap-1.5 mt-4 items-end h-16">
             {weekdays.map((w) => (
               <div key={w.d} className="flex flex-col items-center gap-1.5">
-                <div className={`w-full rounded-md ${w.d === "Thu" ? "bg-brand" : "bg-ink/15"}`} style={{ height: `${w.v}%` }} />
+                <div className={`w-full rounded-md ${w.d === "Thu" ? "bg-brand" : "bg-ink/10"}`} style={{ height: `${w.v}%` }} />
                 <span className={`text-[10px] ${w.d === "Thu" ? "text-brand font-medium" : "text-ink/40"}`}>{w.d}</span>
               </div>
             ))}
