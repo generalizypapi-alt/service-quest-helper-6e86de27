@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { CurriculumLead } from "@/components/site/CurriculumLead";
+import { Testimonials } from "@/components/site/Testimonials";
 
 export const Route = createFileRoute("/learn")({
   head: () => ({
@@ -164,6 +166,18 @@ function LearnPage() {
           </ul>
         </div>
       </section>
+
+      <Testimonials
+        eyebrow="Graduates"
+        heading="Alumni now shipping real software."
+        quotes={[
+          { quote: "I came in barely able to use the terminal. Twelve weeks later I was reviewing pull requests for a real product.", name: "Ifeanyi O.", role: "Full-Stack '24" },
+          { quote: "The cyber security track taught me to think like an attacker. I landed a SOC analyst role two months after graduating.", name: "Halima A.", role: "Cyber Security '24" },
+          { quote: "The mentorship is the difference. You're never stuck for long, and the standard never drops.", name: "Tunde B.", role: "Data Analysis '25" },
+        ]}
+      />
+
+      <CurriculumLead />
 
       <section className="py-24 px-6">
         <div className="max-w-3xl mx-auto bg-card rounded-3xl p-12 ring-1 ring-ink/5 flex flex-col items-center text-center gap-6">
