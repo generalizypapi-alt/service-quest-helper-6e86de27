@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, Sparkles, Zap, Bot, ShieldCheck, Users, Phone } from "lucide-react";
 import { SiteLayout } from "@/components/site/SiteLayout";
+import { Metrics } from "@/components/site/Metrics";
+import { Testimonials } from "@/components/site/Testimonials";
 import servicesImg from "@/assets/services-image.jpg";
 import learnImg from "@/assets/learn-image.jpg";
 import founderImg from "@/assets/founder.jpg";
@@ -118,6 +120,9 @@ function HomePage() {
       </section>
 
 
+      {/* Metrics band */}
+      <Metrics heading="A studio and an academy, in numbers." />
+
       {/* Two offerings */}
       <section className="py-24 bg-secondary border-y border-ink/5">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12">
@@ -180,6 +185,9 @@ function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* Social proof */}
+      <Testimonials />
 
       {/* Founder teaser */}
       <section className="py-24 bg-ink text-surface px-6">
