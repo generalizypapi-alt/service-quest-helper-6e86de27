@@ -85,19 +85,41 @@ function LearnPage() {
         <div className="max-w-7xl mx-auto flex flex-col gap-8">
           <div className="text-xs font-semibold tracking-widest uppercase text-brand">Academy</div>
           <h1 className="text-4xl md:text-6xl font-medium tracking-tight max-w-[22ch] text-balance">
-            Become the engineer who builds the products you wish existed.
+            Four tracks. One standard: industry-ready.
           </h1>
-          <p className="text-lg text-ink/70 max-w-[56ch]">
-            A 12-week cohort taught by working software builders. No filler. You ship something real by the end — guaranteed.
+          <p className="text-lg text-ink/70 max-w-[60ch]">
+            Choose your path — full-stack development, cyber security, data analysis, or Python development. A 12-week cohort taught by working practitioners. You ship something real by the end — guaranteed.
           </p>
         </div>
       </section>
 
       <section className="py-16 bg-secondary border-y border-ink/5 px-6">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-12">
+          <Stat label="Tracks" value="4 paths" />
           <Stat label="Cohort length" value="12 weeks" />
           <Stat label="Format" value="Live + async" />
           <Stat label="Class size" value="≤ 20 students" />
+        </div>
+      </section>
+
+      <section className="py-24 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-xs font-semibold tracking-widest uppercase text-brand mb-4">Tracks</div>
+          <h2 className="text-3xl md:text-4xl font-medium mb-12 max-w-[32ch] text-balance">Pick the path that fits the career you want.</h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {tracks.map((t) => (
+              <div key={t.name} data-reveal className="bg-card rounded-2xl p-8 ring-1 ring-ink/5 flex flex-col gap-4 hover:ring-brand/30 transition">
+                <div className="text-xs uppercase tracking-widest text-brand font-semibold">{t.tag}</div>
+                <h3 className="text-2xl font-medium">{t.name}</h3>
+                <p className="text-ink/60">{t.desc}</p>
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {t.stack.map((s) => (
+                    <span key={s} className="text-xs px-3 py-1 rounded-full bg-ink/5 text-ink/70">{s}</span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
