@@ -127,7 +127,7 @@ function DashboardPage() {
 
   if (loading || !session) {
     return (
-      <div className="dark min-h-screen bg-[oklch(0.14_0.01_50)] text-ink flex items-center justify-center text-ink/40">
+      <div className="min-h-screen bg-secondary text-ink flex items-center justify-center text-ink/40">
         Loading…
       </div>
     );
@@ -139,10 +139,10 @@ function DashboardPage() {
   const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 
   return (
-    <div className="dark min-h-screen bg-[oklch(0.14_0.01_50)] text-ink">
+    <div className="min-h-screen bg-secondary text-ink">
       <div className="flex">
         {/* Sidebar — sticky, full viewport height, scrolls independently */}
-        <aside className="hidden lg:flex sticky top-0 h-screen w-64 shrink-0 flex-col border-r border-ink/10 bg-[oklch(0.16_0.013_50)] px-4 py-5 overflow-y-auto">
+        <aside className="hidden lg:flex sticky top-0 h-screen w-64 shrink-0 flex-col border-r border-ink/10 bg-card px-4 py-5 overflow-y-auto">
           <div className="flex items-center justify-between px-2">
             <Link to="/" className="text-xl font-semibold tracking-tight text-brand">OKIKE</Link>
             <button className="text-ink/50 hover:text-ink p-1 rounded-md hover:bg-ink/5" aria-label="Collapse">
@@ -217,9 +217,9 @@ function DashboardPage() {
         {/* Main column */}
         <div className="flex-1 flex flex-col min-w-0 min-h-screen">
           {/* Top bar */}
-          <header className="sticky top-0 z-30 flex items-center gap-3 px-4 md:px-8 py-4 bg-[oklch(0.14_0.01_50)]/85 backdrop-blur border-b border-ink/10">
+          <header className="sticky top-0 z-30 flex items-center gap-3 px-4 md:px-8 py-4 bg-surface/85 backdrop-blur border-b border-ink/10">
             <div className="flex-1 max-w-2xl">
-              <div className="flex items-center gap-2 rounded-xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 px-3 py-2.5 focus-within:ring-brand/40 transition">
+              <div className="flex items-center gap-2 rounded-xl bg-card ring-1 ring-ink/10 px-3 py-2.5 focus-within:ring-brand/40 transition">
                 <Search className="size-4 text-ink/40" />
                 <input
                   placeholder="Search projects, files, tasks..."
@@ -242,12 +242,12 @@ function DashboardPage() {
               <div className="size-10 rounded-full bg-brand/20 ring-2 ring-brand/30 grid place-items-center text-sm font-semibold text-brand">
                 {initial}
               </div>
-              <span className="absolute bottom-0 right-0 size-2.5 rounded-full bg-emerald-400 ring-2 ring-[oklch(0.14_0.01_50)]" />
+              <span className="absolute bottom-0 right-0 size-2.5 rounded-full bg-emerald-400 ring-2 ring-surface" />
             </div>
           </header>
 
           {/* Mobile nav */}
-          <div className="lg:hidden border-b border-ink/10 bg-[oklch(0.16_0.013_50)] overflow-x-auto">
+          <div className="lg:hidden border-b border-ink/10 bg-card overflow-x-auto">
             <div className="flex gap-1 px-4 py-2">
               {NAV.map((t) => (
                 <button
@@ -309,7 +309,7 @@ function DashboardOverview({
       {/* LEFT */}
       <div className="flex flex-col gap-5 min-w-0">
         {/* Hero + stats */}
-        <section className="relative overflow-hidden rounded-3xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-6 md:p-8">
+        <section className="relative overflow-hidden rounded-3xl bg-card ring-1 ring-ink/10 p-6 md:p-8">
           <div className="absolute inset-0 opacity-60 bg-cover bg-right-top bg-no-repeat" style={{ backgroundImage: `url(${heroWaves})` }} />
           <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.18_0.013_50)] via-[oklch(0.18_0.013_50)]/60 to-transparent" />
           <div className="relative">
@@ -332,7 +332,7 @@ function DashboardOverview({
 
         {/* Active projects + analytics */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-6">
+          <section className="rounded-2xl bg-card ring-1 ring-ink/10 p-6">
             <div className="flex items-center justify-between mb-5">
               <h2 className="font-semibold">Active Projects</h2>
               <button className="text-xs text-ink/50 hover:text-brand">View all</button>
@@ -362,11 +362,11 @@ function DashboardOverview({
                     </div>
                     <div className="flex -space-x-2">
                       {[0, 1].map((j) => (
-                        <div key={j} className="size-6 rounded-full bg-brand/30 ring-2 ring-[oklch(0.18_0.013_50)] grid place-items-center text-[10px] font-semibold text-brand">
+                        <div key={j} className="size-6 rounded-full bg-brand/30 ring-2 ring-card grid place-items-center text-[10px] font-semibold text-brand">
                           {String.fromCharCode(65 + i + j)}
                         </div>
                       ))}
-                      <div className="size-6 rounded-full bg-ink/10 ring-2 ring-[oklch(0.18_0.013_50)] grid place-items-center text-[10px] font-semibold text-ink/60">+{i + 1}</div>
+                      <div className="size-6 rounded-full bg-ink/10 ring-2 ring-card grid place-items-center text-[10px] font-semibold text-ink/60">+{i + 1}</div>
                     </div>
                   </li>
                 );
@@ -374,10 +374,10 @@ function DashboardOverview({
             </ul>
           </section>
 
-          <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-6">
+          <section className="rounded-2xl bg-card ring-1 ring-ink/10 p-6">
             <div className="flex items-center justify-between mb-2">
               <h2 className="font-semibold">Analytics Overview</h2>
-              <select className="text-xs bg-[oklch(0.22_0.013_50)] ring-1 ring-ink/10 rounded-lg px-2 py-1 text-ink/70 focus:outline-none">
+              <select className="text-xs bg-secondary ring-1 ring-ink/10 rounded-lg px-2 py-1 text-ink/70 focus:outline-none">
                 <option>This Month</option>
                 <option>Last Month</option>
               </select>
@@ -414,7 +414,7 @@ function DashboardOverview({
 
         {/* Recent activity + tasks */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-6">
+          <section className="rounded-2xl bg-card ring-1 ring-ink/10 p-6">
             <div className="flex items-center justify-between mb-5">
               <h2 className="font-semibold">Recent Activity</h2>
               <button className="text-xs text-ink/50 hover:text-brand">View all</button>
@@ -445,7 +445,7 @@ function DashboardOverview({
             </ul>
           </section>
 
-          <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-6">
+          <section className="rounded-2xl bg-card ring-1 ring-ink/10 p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="font-semibold">Tasks Overview</h2>
               <button className="text-xs flex items-center gap-1 text-brand hover:opacity-80">
@@ -482,13 +482,13 @@ function DashboardOverview({
 
       {/* RIGHT */}
       <aside className="flex flex-col gap-5">
-        <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-5">
+        <section className="rounded-2xl bg-card ring-1 ring-ink/10 p-5">
           <div className="flex items-center justify-between mb-1">
             <h3 className="font-semibold text-sm">OKIKE AI Assistant</h3>
             <Sparkles className="size-4 text-brand" />
           </div>
           <p className="text-xs text-ink/60 mb-4">Hi {fullName}, how can I help you today?</p>
-          <div className="flex items-center gap-2 bg-[oklch(0.22_0.013_50)] rounded-xl px-3 py-2.5 ring-1 ring-ink/10 mb-4">
+          <div className="flex items-center gap-2 bg-secondary rounded-xl px-3 py-2.5 ring-1 ring-ink/10 mb-4">
             <input placeholder="Ask me anything..." className="flex-1 bg-transparent text-sm placeholder:text-ink/40 focus:outline-none" />
             <button className="size-7 rounded-lg bg-brand grid place-items-center text-brand-foreground hover:opacity-90" aria-label="Send">
               <Send className="size-3.5" />
@@ -512,7 +512,7 @@ function DashboardOverview({
           </ul>
         </section>
 
-        <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-5">
+        <section className="rounded-2xl bg-card ring-1 ring-ink/10 p-5">
           <h3 className="font-semibold text-sm mb-4">Quick Actions</h3>
           <div className="grid grid-cols-3 gap-2">
             {[
@@ -525,7 +525,7 @@ function DashboardOverview({
             ].map((a, i) => (
               <button
                 key={i}
-                className="flex flex-col items-center justify-center gap-1.5 rounded-xl bg-[oklch(0.22_0.013_50)] ring-1 ring-ink/10 px-2 py-3 hover:ring-brand/30 transition"
+                className="flex flex-col items-center justify-center gap-1.5 rounded-xl bg-secondary ring-1 ring-ink/10 px-2 py-3 hover:ring-brand/30 transition"
               >
                 <a.icon className="size-4 text-brand" />
                 <span className="text-[10px] text-ink/70 text-center leading-tight">{a.label}</span>
@@ -534,10 +534,10 @@ function DashboardOverview({
           </div>
         </section>
 
-        <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-5">
+        <section className="rounded-2xl bg-card ring-1 ring-ink/10 p-5">
           <div className="flex items-center justify-between mb-2">
             <h3 className="font-semibold text-sm">Your Productivity</h3>
-            <select className="text-[10px] bg-[oklch(0.22_0.013_50)] ring-1 ring-ink/10 rounded-md px-2 py-0.5 text-ink/70 focus:outline-none">
+            <select className="text-[10px] bg-secondary ring-1 ring-ink/10 rounded-md px-2 py-0.5 text-ink/70 focus:outline-none">
               <option>This Week</option>
             </select>
           </div>
@@ -572,7 +572,7 @@ function DashboardOverview({
 
 function SectionPlaceholder({ section }: { section: Section }) {
   return (
-    <div className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-16 text-center">
+    <div className="rounded-2xl bg-card ring-1 ring-ink/10 p-16 text-center">
       <div className="text-xs uppercase tracking-widest text-brand mb-2">{section}</div>
       <div className="text-xl font-medium">Coming soon</div>
       <p className="text-sm text-ink/50 mt-2">This section is being built. Check back shortly.</p>
@@ -582,7 +582,7 @@ function SectionPlaceholder({ section }: { section: Section }) {
 
 function Stat({ label, value, delta, up, icon: Icon }: { label: string; value: any; delta: string; up: boolean; icon: any }) {
   return (
-    <div className="rounded-2xl bg-[oklch(0.22_0.013_50)]/80 backdrop-blur ring-1 ring-ink/10 p-4">
+    <div className="rounded-2xl bg-secondary/80 backdrop-blur ring-1 ring-ink/10 p-4">
       <div className="flex items-center justify-between mb-2">
         <span className="text-xs text-ink/60">{label}</span>
         <Icon className="size-4 text-ink/40" />
