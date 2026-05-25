@@ -5,38 +5,86 @@ import { useAuth } from "@/hooks/use-auth";
 import {
   FolderKanban,
   CheckCircle2,
-  Inbox,
-  TrendingUp,
+  Users,
+  DollarSign,
   ArrowUpRight,
-  Plus,
-  FileUp,
-  UserPlus,
+  ArrowDownRight,
+  Send,
   Sparkles,
+  ChevronRight,
+  FilePlus,
+  Upload,
+  CheckSquare,
+  UserPlus,
+  FileBarChart,
+  Workflow,
+  FileText,
+  UserCog,
+  ClipboardCheck,
+  CircleUserRound,
+  Plus,
 } from "lucide-react";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  RadialBarChart,
+  RadialBar,
+  PolarAngleAxis,
+} from "recharts";
+import heroWaves from "@/assets/admin-hero-waves.jpg";
 
 export const Route = createFileRoute("/admin/")({
   component: AdminOverview,
 });
 
+const chartData = [
+  { date: "May 1", users: 820 },
+  { date: "May 4", users: 1020 },
+  { date: "May 8", users: 950 },
+  { date: "May 12", users: 1180 },
+  { date: "May 15", users: 1080 },
+  { date: "May 18", users: 1380 },
+  { date: "May 20", users: 1642 },
+  { date: "May 22", users: 1520 },
+  { date: "May 25", users: 1720 },
+  { date: "May 29", users: 1820 },
+];
+
+const productivityData = [{ name: "Productivity", value: 76, fill: "oklch(0.72 0.15 55)" }];
+const weekdays = [
+  { d: "Mon", v: 40 },
+  { d: "Tue", v: 55 },
+  { d: "Wed", v: 65 },
+  { d: "Thu", v: 100 },
+  { d: "Fri", v: 60 },
+  { d: "Sat", v: 35 },
+  { d: "Sun", v: 50 },
+];
+
 function AdminOverview() {
   const { session } = useAuth();
   const [stats, setStats] = useState({ inquiries: 0, projects: 0, inProgress: 0, completed: 0 });
-  const [recent, setRecent] = useState<{ id: string; name: string; project_type: string; status: string; created_at: string }[]>([]);
   const [activeProjects, setActiveProjects] = useState<{ id: string; title: string; package_name: string | null; stage: string }[]>([]);
+  const [recent, setRecent] = useState<{ id: string; name: string; project_type: string; created_at: string }[]>([]);
+  const [tab, setTab] = useState<"all" | "in_progress" | "completed">("all");
 
   useEffect(() => {
     async function load() {
-      const [{ count: inq }, { count: proj }, { count: ip }, { count: comp }, { data: r }, { data: ap }] = await Promise.all([
+      const [{ count: inq }, { count: proj }, { count: ip }, { count: comp }, { data: ap }, { data: r }] = await Promise.all([
         supabase.from("project_inquiries").select("*", { count: "exact", head: true }),
         supabase.from("client_projects").select("*", { count: "exact", head: true }),
         supabase.from("client_projects").select("*", { count: "exact", head: true }).eq("stage", "in_progress"),
         supabase.from("client_projects").select("*", { count: "exact", head: true }).eq("stage", "completed"),
-        supabase.from("project_inquiries").select("id, name, project_type, status, created_at").order("created_at", { ascending: false }).limit(5),
-        supabase.from("client_projects").select("id, title, package_name, stage").in("stage", ["accepted", "in_progress"]).order("created_at", { ascending: false }).limit(4),
+        supabase.from("client_projects").select("id, title, package_name, stage").in("stage", ["accepted", "in_progress"]).order("created_at", { ascending: false }).limit(3),
+        supabase.from("project_inquiries").select("id, name, project_type, created_at").order("created_at", { ascending: false }).limit(4),
       ]);
       setStats({ inquiries: inq ?? 0, projects: proj ?? 0, inProgress: ip ?? 0, completed: comp ?? 0 });
-      setRecent((r ?? []) as never);
       setActiveProjects((ap ?? []) as never);
+      setRecent((r ?? []) as never);
     }
     load();
   }, []);
@@ -45,138 +93,326 @@ function AdminOverview() {
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 
+  const tasks = [
+    { id: 1, label: "Design dashboard UI", tag: "UI/UX", date: "May 25", status: "in_progress" },
+    { id: 2, label: "Implement authentication", tag: "Backend", date: "May 26", status: "in_progress" },
+    { id: 3, label: "Setup payment integration", tag: "Integration", date: "May 28", status: "in_progress" },
+    { id: 4, label: "Write API documentation", tag: "Documentation", date: "May 30", status: "completed" },
+  ];
+  const filteredTasks = tasks.filter(t => tab === "all" ? true : t.status === tab);
+
   return (
-    <div className="flex flex-col gap-6">
-      {/* Hero */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[oklch(0.22_0.02_55)] to-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-8">
-        <div className="absolute -top-10 -right-10 size-64 rounded-full bg-brand/20 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 right-0 size-48 rounded-full bg-brand/10 blur-3xl pointer-events-none" />
-        <div className="relative">
-          <h1 className="text-3xl md:text-4xl font-serif tracking-tight capitalize">
-            {greeting}, <span className="text-brand">{name}</span>.
-          </h1>
-          <p className="text-ink/60 mt-2 text-sm md:text-base">
-            {stats.inProgress > 0
-              ? `${stats.inProgress} active project${stats.inProgress > 1 ? "s are" : " is"} progressing smoothly.`
-              : "Everything's calm. Time to ship something new."}
-          </p>
-        </div>
-      </section>
+    <div className="grid grid-cols-1 xl:grid-cols-[1fr_320px] gap-5">
+      {/* LEFT COLUMN */}
+      <div className="flex flex-col gap-5 min-w-0">
+        {/* Hero + stats card */}
+        <section className="relative overflow-hidden rounded-3xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-6 md:p-8">
+          <div
+            className="absolute inset-0 opacity-60 bg-cover bg-right-top bg-no-repeat"
+            style={{ backgroundImage: `url(${heroWaves})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.18_0.013_50)] via-[oklch(0.18_0.013_50)]/60 to-transparent" />
+          <div className="relative">
+            <h1 className="text-3xl md:text-4xl font-serif tracking-tight">
+              {greeting}, <span className="capitalize">{name}</span>.
+            </h1>
+            <p className="text-ink/60 mt-2 text-sm">
+              {stats.inProgress > 0
+                ? `${stats.inProgress} active project${stats.inProgress > 1 ? "s are" : " is"} progressing smoothly.`
+                : "Everything's calm. Time to ship something new."}
+            </p>
 
-      {/* Stats */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Stat label="Inquiries" value={stats.inquiries} delta="+20%" icon={Inbox} />
-        <Stat label="Active projects" value={stats.inProgress} delta="+28%" icon={FolderKanban} />
-        <Stat label="Completed" value={stats.completed} delta="+18%" icon={CheckCircle2} />
-        <Stat label="Total projects" value={stats.projects} delta="+35%" icon={TrendingUp} />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-        {/* Active projects */}
-        <section className="lg:col-span-2 rounded-2xl bg-[oklch(0.22_0.013_50)] ring-1 ring-ink/10 overflow-hidden">
-          <div className="px-6 py-4 border-b border-ink/10 flex justify-between items-center">
-            <h2 className="text-sm font-semibold">Active projects</h2>
-            <Link to="/admin/projects" className="text-xs text-brand flex items-center gap-1">View all <ArrowUpRight className="size-3" /></Link>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-8">
+              <Stat label="Active Projects" value={stats.inProgress} delta="20%" up icon={FolderKanban} />
+              <Stat label="Tasks Completed" value={32} delta="28%" up icon={CheckCircle2} />
+              <Stat label="Total Users" value={"1,842"} delta="18%" up icon={Users} />
+              <Stat label="Revenue" value={"₦2.4M"} delta="35%" up icon={DollarSign} />
+            </div>
           </div>
-          <ul className="divide-y divide-ink/10">
-            {activeProjects.length === 0 && (
-              <li className="px-6 py-10 text-sm text-ink/40 text-center">No active projects yet.</li>
-            )}
-            {activeProjects.map((p, i) => {
-              const pct = p.stage === "in_progress" ? 60 + ((i * 13) % 30) : 25;
-              return (
-                <li key={p.id} className="px-6 py-4 flex items-center gap-4">
-                  <div className="size-10 rounded-xl bg-brand/15 ring-1 ring-brand/20 grid place-items-center text-brand">
-                    <FolderKanban className="size-4" />
+        </section>
+
+        {/* Active projects + analytics */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {/* Active projects */}
+          <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-6">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="font-semibold">Active Projects</h2>
+              <Link to="/admin/projects" className="text-xs text-ink/50 hover:text-brand">View all</Link>
+            </div>
+            <ul className="space-y-4">
+              {(activeProjects.length ? activeProjects : [
+                { id: "1", title: "NACOS Platform", package_name: "Student Portal System", stage: "in_progress" },
+                { id: "2", title: "Complaint Management System", package_name: "University System", stage: "in_progress" },
+                { id: "3", title: "AI Study Assistant", package_name: "AI Learning Platform", stage: "in_progress" },
+              ]).map((p, i) => {
+                const pct = [78, 62, 94][i] ?? 50;
+                const color = pct > 90 ? "bg-emerald-400" : "bg-brand";
+                return (
+                  <li key={p.id} className="flex items-center gap-3">
+                    <div className={`size-10 rounded-xl ring-1 grid place-items-center text-brand ${pct > 90 ? "bg-emerald-500/15 ring-emerald-500/20 text-emerald-400" : "bg-brand/15 ring-brand/20"}`}>
+                      <FolderKanban className="size-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-sm truncate">{p.title}</div>
+                      <div className="text-xs text-ink/40 truncate">{p.package_name ?? p.stage.replace("_", " ")}</div>
+                    </div>
+                    <div className="hidden sm:flex items-center gap-3 w-36">
+                      <div className="flex-1 h-1.5 rounded-full bg-ink/10 overflow-hidden">
+                        <div className={`h-full rounded-full ${color}`} style={{ width: `${pct}%` }} />
+                      </div>
+                      <span className="text-xs font-medium text-ink/70 w-8 text-right">{pct}%</span>
+                    </div>
+                    <div className="flex -space-x-2">
+                      {[0, 1].map((j) => (
+                        <div key={j} className="size-6 rounded-full bg-brand/30 ring-2 ring-[oklch(0.18_0.013_50)] grid place-items-center text-[10px] font-semibold text-brand">
+                          {String.fromCharCode(65 + i + j)}
+                        </div>
+                      ))}
+                      <div className="size-6 rounded-full bg-ink/10 ring-2 ring-[oklch(0.18_0.013_50)] grid place-items-center text-[10px] font-semibold text-ink/60">+{i + 1}</div>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          </section>
+
+          {/* Analytics */}
+          <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-6">
+            <div className="flex items-center justify-between mb-2">
+              <h2 className="font-semibold">Analytics Overview</h2>
+              <select className="text-xs bg-[oklch(0.22_0.013_50)] ring-1 ring-ink/10 rounded-lg px-2 py-1 text-ink/70 focus:outline-none">
+                <option>This Month</option>
+                <option>Last Month</option>
+              </select>
+            </div>
+            <div className="h-44 -ml-2">
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="gA" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="oklch(0.72 0.15 55)" stopOpacity={0.35} />
+                      <stop offset="100%" stopColor="oklch(0.72 0.15 55)" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <XAxis dataKey="date" tick={{ fontSize: 10, fill: "oklch(0.7 0.013 50 / 50%)" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 10, fill: "oklch(0.7 0.013 50 / 50%)" }} axisLine={false} tickLine={false} width={28} />
+                  <Tooltip
+                    contentStyle={{ background: "oklch(0.22 0.013 50)", border: "1px solid oklch(1 0 0 / 10%)", borderRadius: 8, fontSize: 12 }}
+                    labelStyle={{ color: "oklch(0.7 0.013 50)" }}
+                    itemStyle={{ color: "oklch(0.95 0 0)" }}
+                    formatter={(v) => [`${v} Users`, ""]}
+                  />
+                  <Area type="monotone" dataKey="users" stroke="oklch(0.72 0.15 55)" strokeWidth={2} fill="url(#gA)" />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="grid grid-cols-4 gap-2 mt-4 pt-4 border-t border-ink/10">
+              <MiniStat label="Users" value="1,642" delta="18%" up />
+              <MiniStat label="Engagement" value="68%" delta="24%" up />
+              <MiniStat label="Sessions" value="3,421" delta="12%" up />
+              <MiniStat label="Bounce" value="32%" delta="5%" up={false} />
+            </div>
+          </section>
+        </div>
+
+        {/* Recent activity + tasks */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {/* Recent activity */}
+          <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-6">
+            <div className="flex items-center justify-between mb-5">
+              <h2 className="font-semibold">Recent Activity</h2>
+              <Link to="/admin/inquiries" className="text-xs text-ink/50 hover:text-brand">View all</Link>
+            </div>
+            <ul className="space-y-4">
+              {(recent.length ? recent.map(r => ({
+                icon: FileText,
+                title: `${r.name} — ${r.project_type}`,
+                sub: "New inquiry",
+                time: new Date(r.created_at).toLocaleDateString(),
+              })) : [
+                { icon: FileText, title: "You uploaded project documentation", sub: "NACOS Platform", time: "2h ago" },
+                { icon: UserCog, title: "Jane updated the project status", sub: "Complaint Management System", time: "5h ago" },
+                { icon: CircleUserRound, title: "New user registered", sub: "AI Study Assistant", time: "1d ago" },
+                { icon: ClipboardCheck, title: "You completed a task", sub: "Design System Implementation", time: "1d ago" },
+              ]).map((a, i) => (
+                <li key={i} className="flex items-start gap-3">
+                  <div className="size-9 rounded-xl bg-brand/15 ring-1 ring-brand/20 grid place-items-center text-brand shrink-0">
+                    <a.icon className="size-4" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-medium text-sm truncate">{p.title}</div>
-                    <div className="text-xs text-ink/40 truncate">{p.package_name ?? p.stage.replace("_", " ")}</div>
+                    <div className="text-sm font-medium truncate">{a.title}</div>
+                    <div className="text-xs text-ink/40 truncate">{a.sub}</div>
                   </div>
-                  <div className="hidden sm:flex items-center gap-3 w-48">
-                    <div className="flex-1 h-1.5 rounded-full bg-ink/10 overflow-hidden">
-                      <div className="h-full bg-brand rounded-full" style={{ width: `${pct}%` }} />
-                    </div>
-                    <span className="text-xs font-medium text-ink/70 w-8 text-right">{pct}%</span>
-                  </div>
+                  <span className="text-xs text-ink/40 shrink-0">{a.time}</span>
                 </li>
-              );
-            })}
+              ))}
+            </ul>
+          </section>
+
+          {/* Tasks Overview */}
+          <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="font-semibold">Tasks Overview</h2>
+              <button className="text-xs flex items-center gap-1 text-brand hover:opacity-80">
+                <Plus className="size-3" /> Add Task
+              </button>
+            </div>
+            <div className="flex gap-2 mb-4">
+              {(["all", "in_progress", "completed"] as const).map((t) => (
+                <button
+                  key={t}
+                  onClick={() => setTab(t)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium capitalize transition ${
+                    tab === t ? "bg-brand text-brand-foreground" : "text-ink/60 hover:text-ink hover:bg-ink/5"
+                  }`}
+                >
+                  {t.replace("_", " ")}
+                </button>
+              ))}
+            </div>
+            <ul className="space-y-2">
+              {filteredTasks.map((t) => (
+                <li key={t.id} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-ink/5">
+                  <input
+                    type="checkbox"
+                    defaultChecked={t.status === "completed"}
+                    className="size-4 rounded accent-brand"
+                  />
+                  <span className={`flex-1 text-sm ${t.status === "completed" ? "line-through text-ink/40" : ""}`}>{t.label}</span>
+                  <span className="text-[10px] px-2 py-1 rounded-md bg-brand/15 text-brand font-medium">{t.tag}</span>
+                  <span className="text-xs text-ink/50 w-14 text-right">{t.date}</span>
+                  <div className="size-6 rounded-full bg-brand/30 grid place-items-center text-[10px] font-semibold text-brand">U</div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        </div>
+      </div>
+
+      {/* RIGHT COLUMN */}
+      <aside className="flex flex-col gap-5">
+        {/* AI Assistant */}
+        <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-5">
+          <div className="flex items-center justify-between mb-1">
+            <h3 className="font-semibold text-sm">OKIKE AI Assistant</h3>
+            <Sparkles className="size-4 text-brand" />
+          </div>
+          <p className="text-xs text-ink/60 mb-4">Hi {name}, how can I help you today?</p>
+          <div className="flex items-center gap-2 bg-[oklch(0.22_0.013_50)] rounded-xl px-3 py-2.5 ring-1 ring-ink/10 mb-4">
+            <input
+              placeholder="Ask me anything..."
+              className="flex-1 bg-transparent text-sm placeholder:text-ink/40 focus:outline-none"
+            />
+            <button className="size-7 rounded-lg bg-brand grid place-items-center text-brand-foreground hover:opacity-90" aria-label="Send">
+              <Send className="size-3.5" />
+            </button>
+          </div>
+          <ul className="space-y-1.5">
+            {[
+              { icon: FileBarChart, label: "Summarize project progress" },
+              { icon: FileText, label: "Generate a project report" },
+              { icon: Users, label: "Analyze user engagement" },
+              { icon: Workflow, label: "Suggest workflow automation" },
+            ].map((s, i) => (
+              <li key={i}>
+                <button className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-ink/5 text-left group">
+                  <s.icon className="size-4 text-brand shrink-0" />
+                  <span className="flex-1 text-xs text-ink/80">{s.label}</span>
+                  <ChevronRight className="size-3 text-ink/40 group-hover:text-brand" />
+                </button>
+              </li>
+            ))}
           </ul>
         </section>
 
-        {/* Quick actions */}
-        <section className="rounded-2xl bg-[oklch(0.22_0.013_50)] ring-1 ring-ink/10 p-6">
-          <h2 className="text-sm font-semibold mb-4">Quick actions</h2>
-          <div className="grid grid-cols-2 gap-3">
-            <QuickAction to="/admin/content/portfolio" icon={Plus} label="New work" />
-            <QuickAction to="/admin/content/packages" icon={FileUp} label="New package" />
-            <QuickAction to="/admin/inquiries" icon={UserPlus} label="Inquiries" />
-            <QuickAction to="/admin/settings" icon={Sparkles} label="Site copy" />
-          </div>
-
-          <div className="mt-6 rounded-xl bg-gradient-to-br from-brand/20 to-brand/5 ring-1 ring-brand/20 p-4">
-            <div className="flex items-center gap-2 text-sm font-medium">
-              <Sparkles className="size-4 text-brand" /> OKIKE Assistant
-            </div>
-            <p className="text-xs text-ink/60 mt-1">AI helper coming soon — drafting replies, summaries, project updates.</p>
+        {/* Quick Actions */}
+        <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-5">
+          <h3 className="font-semibold text-sm mb-4">Quick Actions</h3>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { icon: FilePlus, label: "New Project", to: "/admin/projects" },
+              { icon: Upload, label: "Upload File", to: "/admin/content/portfolio" },
+              { icon: CheckSquare, label: "Create Task", to: "/admin" },
+              { icon: UserPlus, label: "Invite Team", to: "/admin/content/team" },
+              { icon: FileBarChart, label: "Generate Report", to: "/admin" },
+              { icon: Workflow, label: "AI Workflow", to: "/admin" },
+            ].map((a, i) => (
+              <Link
+                key={i}
+                to={a.to as any}
+                className="flex flex-col items-center justify-center gap-1.5 rounded-xl bg-[oklch(0.22_0.013_50)] ring-1 ring-ink/10 px-2 py-3 hover:ring-brand/30 transition"
+              >
+                <a.icon className="size-4 text-brand" />
+                <span className="text-[10px] text-ink/70 text-center leading-tight">{a.label}</span>
+              </Link>
+            ))}
           </div>
         </section>
-      </div>
 
-      {/* Recent inquiries */}
-      <section className="rounded-2xl bg-[oklch(0.22_0.013_50)] ring-1 ring-ink/10 overflow-hidden">
-        <div className="px-6 py-4 border-b border-ink/10 flex justify-between items-center">
-          <h2 className="text-sm font-semibold">Recent inquiries</h2>
-          <Link to="/admin/inquiries" className="text-xs text-brand flex items-center gap-1">View all <ArrowUpRight className="size-3" /></Link>
-        </div>
-        <ul className="divide-y divide-ink/10">
-          {recent.length === 0 && <li className="px-6 py-8 text-sm text-ink/40 text-center">No inquiries yet.</li>}
-          {recent.map((r) => (
-            <li key={r.id} className="px-6 py-4 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="size-9 rounded-full bg-brand/15 ring-1 ring-brand/20 grid place-items-center text-xs font-semibold text-brand uppercase">
-                  {r.name.charAt(0)}
-                </div>
-                <div className="min-w-0">
-                  <div className="font-medium text-sm truncate">{r.name} <span className="text-ink/40 font-normal">— {r.project_type}</span></div>
-                  <div className="text-xs text-ink/40">{new Date(r.created_at).toLocaleString()}</div>
-                </div>
+        {/* Productivity */}
+        <section className="rounded-2xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 p-5">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="font-semibold text-sm">Your Productivity</h3>
+            <select className="text-[10px] bg-[oklch(0.22_0.013_50)] ring-1 ring-ink/10 rounded-md px-2 py-0.5 text-ink/70 focus:outline-none">
+              <option>This Week</option>
+            </select>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="relative size-24 shrink-0">
+              <ResponsiveContainer width="100%" height="100%">
+                <RadialBarChart innerRadius="75%" outerRadius="100%" data={productivityData} startAngle={90} endAngle={-270}>
+                  <PolarAngleAxis type="number" domain={[0, 100]} tick={false} />
+                  <RadialBar dataKey="value" cornerRadius={20} background={{ fill: "oklch(0.22 0.013 50)" }} />
+                </RadialBarChart>
+              </ResponsiveContainer>
+              <div className="absolute inset-0 grid place-items-center text-lg font-semibold">76%</div>
+            </div>
+            <div className="min-w-0">
+              <div className="text-sm font-medium text-brand">Great job!</div>
+              <div className="text-xs text-ink/60 leading-snug">You're more productive than 76% of users.</div>
+            </div>
+          </div>
+          <div className="grid grid-cols-7 gap-1.5 mt-4 items-end h-16">
+            {weekdays.map((w) => (
+              <div key={w.d} className="flex flex-col items-center gap-1.5">
+                <div
+                  className={`w-full rounded-md ${w.d === "Thu" ? "bg-brand" : "bg-ink/15"}`}
+                  style={{ height: `${w.v}%` }}
+                />
+                <span className={`text-[10px] ${w.d === "Thu" ? "text-brand font-medium" : "text-ink/40"}`}>{w.d}</span>
               </div>
-              <span className="text-[10px] uppercase tracking-wider px-2 py-1 rounded-full bg-brand/15 text-brand ring-1 ring-brand/20 font-medium">{r.status}</span>
-            </li>
-          ))}
-        </ul>
-      </section>
+            ))}
+          </div>
+        </section>
+      </aside>
     </div>
   );
 }
 
-function Stat({ label, value, delta, icon: Icon }: { label: string; value: number; delta: string; icon: any }) {
+function Stat({ label, value, delta, up, icon: Icon }: { label: string; value: any; delta: string; up: boolean; icon: any }) {
   return (
-    <div className="rounded-2xl bg-[oklch(0.22_0.013_50)] ring-1 ring-ink/10 p-5">
-      <div className="flex items-center justify-between">
-        <div className="text-xs uppercase tracking-wider text-ink/50">{label}</div>
-        <div className="size-8 rounded-lg bg-brand/15 ring-1 ring-brand/20 grid place-items-center text-brand">
-          <Icon className="size-4" />
-        </div>
+    <div className="rounded-2xl bg-[oklch(0.22_0.013_50)]/80 backdrop-blur ring-1 ring-ink/10 p-4">
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-xs text-ink/60">{label}</span>
+        <Icon className="size-4 text-ink/40" />
       </div>
-      <div className="text-3xl font-semibold mt-3 tracking-tight">{value}</div>
-      <div className="text-xs mt-1 text-emerald-400 flex items-center gap-1">
-        <TrendingUp className="size-3" /> {delta} <span className="text-ink/40">this month</span>
+      <div className="text-2xl font-semibold tracking-tight">{value}</div>
+      <div className={`text-[11px] mt-1 flex items-center gap-1 ${up ? "text-emerald-400" : "text-rose-400"}`}>
+        {up ? <ArrowUpRight className="size-3" /> : <ArrowDownRight className="size-3" />}
+        {delta} <span className="text-ink/40">this month</span>
       </div>
     </div>
   );
 }
 
-function QuickAction({ to, icon: Icon, label }: { to: string; icon: any; label: string }) {
+function MiniStat({ label, value, delta, up }: { label: string; value: string; delta: string; up: boolean }) {
   return (
-    <Link
-      to={to as any}
-      className="flex flex-col items-center gap-2 rounded-xl bg-[oklch(0.18_0.013_50)] ring-1 ring-ink/10 px-3 py-4 text-xs font-medium text-ink/80 hover:text-brand hover:ring-brand/30 transition"
-    >
-      <Icon className="size-5 text-brand" />
-      {label}
-    </Link>
+    <div>
+      <div className="text-[10px] uppercase tracking-wider text-ink/50">{label}</div>
+      <div className="text-base font-semibold mt-0.5">{value}</div>
+      <div className={`text-[10px] flex items-center gap-0.5 ${up ? "text-emerald-400" : "text-rose-400"}`}>
+        {up ? <ArrowUpRight className="size-2.5" /> : <ArrowDownRight className="size-2.5" />}{delta}
+      </div>
+    </div>
   );
 }
