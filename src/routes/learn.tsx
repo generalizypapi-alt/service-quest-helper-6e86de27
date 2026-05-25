@@ -43,12 +43,39 @@ export const Route = createFileRoute("/learn")({
   component: LearnPage,
 });
 
+const tracks = [
+  {
+    name: "Full-Stack Development",
+    tag: "Build the web",
+    desc: "Ship production web apps end-to-end: React, TypeScript, Node, Postgres, auth, deployment.",
+    stack: ["React", "TypeScript", "Node.js", "Postgres", "Tailwind"],
+  },
+  {
+    name: "Cyber Security",
+    tag: "Defend & break",
+    desc: "Offensive and defensive fundamentals: networking, web exploitation, hardening, incident response.",
+    stack: ["Linux", "Networking", "OWASP Top 10", "Burp Suite", "Wireshark"],
+  },
+  {
+    name: "Data Analysis",
+    tag: "Turn data into decisions",
+    desc: "From messy spreadsheets to clear dashboards. SQL, Python, statistics, and storytelling with data.",
+    stack: ["SQL", "Python", "Pandas", "Power BI", "Excel"],
+  },
+  {
+    name: "Python Development",
+    tag: "Automate & build",
+    desc: "Master Python for scripting, APIs, automation, and a launchpad into AI/ML or backend engineering.",
+    stack: ["Python", "FastAPI", "Pytest", "Automation", "APIs"],
+  },
+];
+
 const curriculum = [
-  { week: "Weeks 1–2", title: "Foundations", desc: "HTML, CSS, modern JavaScript, version control with Git, and the developer mindset." },
-  { week: "Weeks 3–5", title: "Frontend Mastery", desc: "React, TypeScript, Tailwind, component design, state management, and accessibility." },
-  { week: "Weeks 6–8", title: "Backend & Data", desc: "Postgres, REST and RPC APIs, authentication, file storage, and real-time data." },
-  { week: "Weeks 9–10", title: "Product Skills", desc: "UX writing, design systems, deployment, monitoring, and shipping with confidence." },
-  { week: "Weeks 11–12", title: "Capstone", desc: "Ship a real, working product to real users. Add it to your portfolio. Defend your design choices." },
+  { week: "Weeks 1–2", title: "Foundations", desc: "Computers, the command line, Git, problem solving, and the engineering mindset — shared across every track." },
+  { week: "Weeks 3–5", title: "Core Track Skills", desc: "Deep work in your chosen track: full-stack, cyber security, data analysis, or Python development." },
+  { week: "Weeks 6–8", title: "Tooling & Systems", desc: "Databases, APIs, cloud, security basics, and the production tools real teams use every day." },
+  { week: "Weeks 9–10", title: "Product & Professional Skills", desc: "Communication, code review, documentation, deployment, and shipping with confidence." },
+  { week: "Weeks 11–12", title: "Capstone", desc: "Ship a real project in your track to real users. Add it to your portfolio. Defend your design choices." },
 ];
 
 function LearnPage() {
