@@ -309,9 +309,9 @@ function DashboardOverview({
       {/* LEFT */}
       <div className="flex flex-col gap-5 min-w-0">
         {/* Hero + stats */}
-        <section className="relative overflow-hidden rounded-3xl bg-card ring-1 ring-ink/10 p-6 md:p-8">
-          <div className="absolute inset-0 opacity-60 bg-cover bg-right-top bg-no-repeat" style={{ backgroundImage: `url(${heroWaves})` }} />
-          <div className="absolute inset-0 bg-gradient-to-r from-[oklch(0.18_0.013_50)] via-[oklch(0.18_0.013_50)]/60 to-transparent" />
+        <section className="relative overflow-hidden rounded-3xl bg-card ring-1 ring-ink/5 p-6 md:p-8">
+          <div className="absolute -top-24 -right-24 size-72 rounded-full bg-brand/15 blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 right-0 size-56 rounded-full bg-brand/10 blur-3xl pointer-events-none" />
           <div className="relative">
             <h1 className="text-3xl md:text-4xl font-serif tracking-tight">
               {greeting}, <span className="capitalize">{fullName}</span>.
