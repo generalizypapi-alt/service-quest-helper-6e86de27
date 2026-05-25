@@ -6,9 +6,9 @@ export const Route = createFileRoute("/learn")({
   head: () => ({
     meta: [
       { title: "Academy — OKIKE" },
-      { name: "description", content: "Cohort-based courses to take you from beginner to industry-ready software engineer. Learn by building real products with OKIKE." },
+      { name: "description", content: "Cohort-based tracks in full-stack development, cyber security, data analysis, and Python — taught by working practitioners at OKIKE." },
       { property: "og:title", content: "Academy — OKIKE" },
-      { property: "og:description", content: "Learn to build real software with OKIKE. Cohort-based, mentor-led." },
+      { property: "og:description", content: "Four industry-ready tracks: full-stack, cyber security, data analysis, and Python. Cohort-based, mentor-led." },
     ],
     scripts: [
       {
