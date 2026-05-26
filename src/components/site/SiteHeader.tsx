@@ -2,6 +2,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, User as UserIcon, LogOut, LayoutDashboard, Shield, ArrowUpRight } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+import { ThemeToggle } from "./ThemeToggle";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,6 +47,9 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle />
+
+
 
 
           {session ? (

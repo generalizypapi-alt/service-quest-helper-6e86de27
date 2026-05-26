@@ -47,34 +47,34 @@
 :root {
   --radius: 0.75rem;
 
-  /* Yellow & Black brand — dark theme */
-  --surface: oklch(0.16 0.004 90);           /* near-black background */
-  --ink: oklch(0.985 0.003 95);              /* off-white text */
-  --ink-muted: oklch(0.985 0.003 95 / 60%);
-  --brand: oklch(0.88 0.18 95);              /* signature yellow */
+  /* Yellow & Black brand — LIGHT theme (default) */
+  --surface: oklch(0.985 0.003 95);          /* off-white background */
+  --ink: oklch(0.16 0.004 90);               /* near-black text */
+  --ink-muted: oklch(0.16 0.004 90 / 60%);
+  --brand: oklch(0.82 0.18 95);              /* signature yellow */
   --brand-foreground: oklch(0.14 0.004 90);  /* black on yellow */
 
-  /* Map shadcn semantic tokens to the dark palette */
   --background: var(--surface);
   --foreground: var(--ink);
-  --card: oklch(0.22 0.004 90);
+  --card: oklch(1 0 0);
   --card-foreground: var(--ink);
-  --popover: oklch(0.22 0.004 90);
+  --popover: oklch(1 0 0);
   --popover-foreground: var(--ink);
   --primary: var(--brand);
   --primary-foreground: var(--brand-foreground);
-  --secondary: oklch(0.24 0.004 90);
+  --secondary: oklch(0.96 0.003 95);
   --secondary-foreground: var(--ink);
-  --muted: oklch(0.24 0.004 90);
-  --muted-foreground: oklch(0.72 0.005 95);
-  --accent: oklch(0.32 0.07 95);
-  --accent-foreground: var(--brand);
+  --muted: oklch(0.96 0.003 95);
+  --muted-foreground: oklch(0.45 0.005 95);
+  --accent: oklch(0.95 0.05 95);
+  --accent-foreground: oklch(0.25 0.05 95);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
+  --border: oklch(0.16 0.004 90 / 10%);
+  --input: oklch(0.16 0.004 90 / 15%);
   --ring: var(--brand);
 }
+
 
 .dark {
   --surface: oklch(0.16 0.004 90);
