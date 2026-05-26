@@ -203,29 +203,29 @@ function DashboardPage() {
         {/* Main */}
         <div className="flex-1 flex flex-col min-w-0 min-h-screen">
           {/* Top bar */}
-          <header className="sticky top-0 z-30 flex items-center gap-3 px-4 md:px-8 py-4 bg-background/80 backdrop-blur border-b border-ink/10">
-            <div className="flex-1 max-w-2xl">
-              <div className="flex items-center gap-2 rounded-xl bg-card ring-1 ring-ink/10 px-3 py-2.5 focus-within:ring-brand/40 transition">
-                <Search className="size-4 text-ink/40" />
+          <header className="sticky top-0 z-30 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 md:px-8 py-3 sm:py-4 bg-background/80 backdrop-blur border-b border-ink/10">
+            <div className="flex-1 min-w-0 max-w-2xl">
+              <div className="flex items-center gap-2 rounded-xl bg-card ring-1 ring-ink/10 px-3 py-2 sm:py-2.5 focus-within:ring-brand/40 transition">
+                <Search className="size-4 text-ink/40 shrink-0" />
                 <input
-                  placeholder="Search projects, courses, files, people..."
-                  className="flex-1 bg-transparent text-sm placeholder:text-ink/40 focus:outline-none"
+                  placeholder="Search..."
+                  className="flex-1 min-w-0 bg-transparent text-sm placeholder:text-ink/40 focus:outline-none"
                 />
                 <kbd className="hidden md:inline-flex text-[10px] text-ink/40 ring-1 ring-ink/10 rounded px-1.5 py-0.5">⌘K</kbd>
               </div>
             </div>
-            <button className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-brand/15 text-brand ring-1 ring-brand/25 px-3.5 py-2.5 text-sm font-medium hover:bg-brand/20">
+            <button className="hidden md:inline-flex items-center gap-1.5 rounded-xl bg-brand/15 text-brand ring-1 ring-brand/25 px-3.5 py-2.5 text-sm font-medium hover:bg-brand/20">
               <Sparkle className="size-4" /> Ask OKIKE AI
             </button>
-            <button className="relative rounded-xl p-2.5 ring-1 ring-ink/10 hover:bg-ink/5" aria-label="Messages">
+            <button className="relative rounded-xl p-2 sm:p-2.5 ring-1 ring-ink/10 hover:bg-ink/5" aria-label="Messages">
               <MessageSquare className="size-4 text-ink/70" />
               <span className="absolute -top-1 -right-1 size-4 rounded-full bg-brand text-[10px] font-semibold text-brand-foreground grid place-items-center">3</span>
             </button>
-            <button className="relative rounded-xl p-2.5 ring-1 ring-ink/10 hover:bg-ink/5" aria-label="Notifications">
+            <button className="relative rounded-xl p-2 sm:p-2.5 ring-1 ring-ink/10 hover:bg-ink/5" aria-label="Notifications">
               <Bell className="size-4 text-ink/70" />
               <span className="absolute -top-1 -right-1 size-4 rounded-full bg-brand text-[10px] font-semibold text-brand-foreground grid place-items-center">7</span>
             </button>
-            <div className="flex items-center gap-1.5">
+            <div className="hidden sm:flex items-center gap-1.5">
               <div className="size-9 rounded-full bg-brand/20 ring-2 ring-brand/30 grid place-items-center text-sm font-semibold text-brand">
                 {initial}
               </div>
@@ -233,24 +233,7 @@ function DashboardPage() {
             </div>
           </header>
 
-          {/* Mobile nav */}
-          <div className="lg:hidden border-b border-ink/10 bg-card overflow-x-auto">
-            <div className="flex gap-1 px-4 py-2">
-              {NAV.map((t) => (
-                <button
-                  key={t.key}
-                  onClick={() => setSection(t.key)}
-                  className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium ${
-                    section === t.key ? "bg-brand/15 text-brand" : "text-ink/60"
-                  }`}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <main className="flex-1 px-4 md:px-8 py-6">
+          <main className="flex-1 px-3 sm:px-4 md:px-8 py-4 sm:py-6 min-w-0">
             {section === "dashboard" ? (
               <DashboardOverview
                 firstName={firstName}
