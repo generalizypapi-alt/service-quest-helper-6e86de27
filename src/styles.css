@@ -47,12 +47,12 @@
 :root {
   --radius: 0.75rem;
 
-  /* Heritage Editorial tokens */
-  --surface: oklch(0.992 0.004 80);          /* #fdfcfb warm off-white */
-  --ink: oklch(0.196 0.013 50);              /* #1c1917 warm near-black */
-  --ink-muted: oklch(0.196 0.013 50 / 60%);
-  --brand: oklch(0.495 0.118 52);            /* #92400e warm amber */
-  --brand-foreground: oklch(0.992 0.004 80);
+  /* Yellow & Black brand */
+  --surface: oklch(0.992 0.003 95);          /* off-white */
+  --ink: oklch(0.16 0.004 90);               /* near-black */
+  --ink-muted: oklch(0.16 0.004 90 / 60%);
+  --brand: oklch(0.87 0.18 95);              /* signature yellow */
+  --brand-foreground: oklch(0.14 0.004 90);  /* black on yellow */
 
   /* Map shadcn semantic tokens to the heritage palette */
   --background: var(--surface);
