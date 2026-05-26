@@ -113,11 +113,14 @@ function DashboardPage() {
   return (
     <div className="min-h-screen bg-background text-ink">
       <div className="flex">
-        {/* Sidebar */}
-        <aside className="hidden lg:flex sticky top-0 h-screen w-64 shrink-0 flex-col border-r border-ink/10 bg-card px-4 py-5">
-          <div className="px-2">
-            <Link to="/" className="text-2xl font-semibold tracking-tight text-brand">OKIKE</Link>
-            <div className="text-[11px] text-ink/50 mt-0.5">Your Digital Ecosystem</div>
+        {/* Sidebar — always visible, collapses to icons on small screens */}
+        <aside className="sticky top-0 h-screen w-14 sm:w-16 lg:w-64 shrink-0 flex flex-col border-r border-ink/10 bg-card px-2 lg:px-4 py-5 transition-[width]">
+          <div className="px-1 lg:px-2">
+            <Link to="/" className="block text-xl lg:text-2xl font-semibold tracking-tight text-brand text-center lg:text-left">
+              <span className="lg:hidden">O</span>
+              <span className="hidden lg:inline">OKIKE</span>
+            </Link>
+            <div className="hidden lg:block text-[11px] text-ink/50 mt-0.5">Your Digital Ecosystem</div>
           </div>
 
           <nav className="mt-7 flex-1 flex flex-col gap-1 overflow-y-auto">
@@ -128,16 +131,17 @@ function DashboardPage() {
                 <button
                   key={t.key}
                   onClick={() => setSection(t.key)}
-                  className={`w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition text-left ${
+                  title={t.label}
+                  className={`w-full flex items-center gap-3 rounded-xl px-2 lg:px-3 py-2.5 text-sm font-medium transition text-left justify-center lg:justify-start ${
                     active
                       ? "bg-brand/15 text-brand ring-1 ring-brand/25"
                       : "text-ink/70 hover:text-ink hover:bg-ink/5"
                   }`}
                 >
-                  <Icon className="size-4" />
-                  <span className="flex-1">{t.label}</span>
+                  <Icon className="size-4 shrink-0" />
+                  <span className="hidden lg:inline flex-1">{t.label}</span>
                   {t.badge ? (
-                    <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-brand text-brand-foreground min-w-[18px] text-center">
+                    <span className="hidden lg:inline text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-brand text-brand-foreground min-w-[18px] text-center">
                       {t.badge}
                     </span>
                   ) : null}
@@ -148,33 +152,35 @@ function DashboardPage() {
             {role === "admin" && (
               <Link
                 to="/admin"
-                className="mt-3 flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-ink/70 hover:text-brand hover:bg-ink/5 ring-1 ring-ink/10"
+                title="Admin panel"
+                className="mt-3 flex items-center gap-3 rounded-xl px-2 lg:px-3 py-2.5 text-sm font-medium text-ink/70 hover:text-brand hover:bg-ink/5 ring-1 ring-ink/10 justify-center lg:justify-start"
               >
-                <Shield className="size-4" /> Admin panel
+                <Shield className="size-4 shrink-0" />
+                <span className="hidden lg:inline">Admin panel</span>
               </Link>
             )}
           </nav>
 
           {/* Upgrade card */}
-          <div className="mt-4 rounded-2xl p-3 bg-gradient-to-br from-brand/25 to-brand/5 ring-1 ring-brand/25 flex items-center gap-3 cursor-pointer hover:from-brand/35 transition">
-            <div className="size-9 rounded-xl bg-brand/25 ring-1 ring-brand/40 grid place-items-center text-brand">
+          <div className="mt-4 rounded-2xl p-2 lg:p-3 bg-gradient-to-br from-brand/25 to-brand/5 ring-1 ring-brand/25 flex items-center gap-3 cursor-pointer hover:from-brand/35 transition justify-center lg:justify-start">
+            <div className="size-9 rounded-xl bg-brand/25 ring-1 ring-brand/40 grid place-items-center text-brand shrink-0">
               <Crown className="size-4" />
             </div>
-            <div className="flex-1 min-w-0">
+            <div className="hidden lg:block flex-1 min-w-0">
               <div className="text-sm font-medium">Upgrade Plan</div>
               <div className="text-[11px] text-ink/60">Unlock premium features</div>
             </div>
           </div>
 
           {/* User profile */}
-          <div className="mt-3 flex items-center gap-3 px-2 py-2 rounded-xl">
+          <div className="mt-3 flex items-center gap-3 px-1 lg:px-2 py-2 rounded-xl justify-center lg:justify-start">
             <div className="relative shrink-0">
-              <div className="size-10 rounded-full bg-brand/20 ring-2 ring-brand/30 grid place-items-center text-sm font-semibold text-brand">
+              <div className="size-9 lg:size-10 rounded-full bg-brand/20 ring-2 ring-brand/30 grid place-items-center text-sm font-semibold text-brand">
                 {initial}
               </div>
               <span className="absolute -bottom-0.5 -right-0.5 size-3 rounded-full bg-emerald-400 ring-2 ring-card" />
             </div>
-            <div className="flex-1 min-w-0">
+            <div className="hidden lg:block flex-1 min-w-0">
               <div className="text-sm font-medium truncate capitalize flex items-center gap-1">
                 {fullName} <ChevronRight className="size-3 text-ink/40" />
               </div>
@@ -186,7 +192,7 @@ function DashboardPage() {
             </div>
             <button
               onClick={async () => { await signOut(); navigate({ to: "/" }); }}
-              className="text-ink/40 hover:text-brand p-1 rounded"
+              className="hidden lg:inline-flex text-ink/40 hover:text-brand p-1 rounded"
               aria-label="Sign out"
             >
               <LogOut className="size-4" />
@@ -197,29 +203,29 @@ function DashboardPage() {
         {/* Main */}
         <div className="flex-1 flex flex-col min-w-0 min-h-screen">
           {/* Top bar */}
-          <header className="sticky top-0 z-30 flex items-center gap-3 px-4 md:px-8 py-4 bg-background/80 backdrop-blur border-b border-ink/10">
-            <div className="flex-1 max-w-2xl">
-              <div className="flex items-center gap-2 rounded-xl bg-card ring-1 ring-ink/10 px-3 py-2.5 focus-within:ring-brand/40 transition">
-                <Search className="size-4 text-ink/40" />
+          <header className="sticky top-0 z-30 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 md:px-8 py-3 sm:py-4 bg-background/80 backdrop-blur border-b border-ink/10">
+            <div className="flex-1 min-w-0 max-w-2xl">
+              <div className="flex items-center gap-2 rounded-xl bg-card ring-1 ring-ink/10 px-3 py-2 sm:py-2.5 focus-within:ring-brand/40 transition">
+                <Search className="size-4 text-ink/40 shrink-0" />
                 <input
-                  placeholder="Search projects, courses, files, people..."
-                  className="flex-1 bg-transparent text-sm placeholder:text-ink/40 focus:outline-none"
+                  placeholder="Search..."
+                  className="flex-1 min-w-0 bg-transparent text-sm placeholder:text-ink/40 focus:outline-none"
                 />
                 <kbd className="hidden md:inline-flex text-[10px] text-ink/40 ring-1 ring-ink/10 rounded px-1.5 py-0.5">⌘K</kbd>
               </div>
             </div>
-            <button className="hidden sm:inline-flex items-center gap-1.5 rounded-xl bg-brand/15 text-brand ring-1 ring-brand/25 px-3.5 py-2.5 text-sm font-medium hover:bg-brand/20">
+            <button className="hidden md:inline-flex items-center gap-1.5 rounded-xl bg-brand/15 text-brand ring-1 ring-brand/25 px-3.5 py-2.5 text-sm font-medium hover:bg-brand/20">
               <Sparkle className="size-4" /> Ask OKIKE AI
             </button>
-            <button className="relative rounded-xl p-2.5 ring-1 ring-ink/10 hover:bg-ink/5" aria-label="Messages">
+            <button className="relative rounded-xl p-2 sm:p-2.5 ring-1 ring-ink/10 hover:bg-ink/5" aria-label="Messages">
               <MessageSquare className="size-4 text-ink/70" />
               <span className="absolute -top-1 -right-1 size-4 rounded-full bg-brand text-[10px] font-semibold text-brand-foreground grid place-items-center">3</span>
             </button>
-            <button className="relative rounded-xl p-2.5 ring-1 ring-ink/10 hover:bg-ink/5" aria-label="Notifications">
+            <button className="relative rounded-xl p-2 sm:p-2.5 ring-1 ring-ink/10 hover:bg-ink/5" aria-label="Notifications">
               <Bell className="size-4 text-ink/70" />
               <span className="absolute -top-1 -right-1 size-4 rounded-full bg-brand text-[10px] font-semibold text-brand-foreground grid place-items-center">7</span>
             </button>
-            <div className="flex items-center gap-1.5">
+            <div className="hidden sm:flex items-center gap-1.5">
               <div className="size-9 rounded-full bg-brand/20 ring-2 ring-brand/30 grid place-items-center text-sm font-semibold text-brand">
                 {initial}
               </div>
@@ -227,24 +233,7 @@ function DashboardPage() {
             </div>
           </header>
 
-          {/* Mobile nav */}
-          <div className="lg:hidden border-b border-ink/10 bg-card overflow-x-auto">
-            <div className="flex gap-1 px-4 py-2">
-              {NAV.map((t) => (
-                <button
-                  key={t.key}
-                  onClick={() => setSection(t.key)}
-                  className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-xs font-medium ${
-                    section === t.key ? "bg-brand/15 text-brand" : "text-ink/60"
-                  }`}
-                >
-                  {t.label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <main className="flex-1 px-4 md:px-8 py-6">
+          <main className="flex-1 px-3 sm:px-4 md:px-8 py-4 sm:py-6 min-w-0">
             {section === "dashboard" ? (
               <DashboardOverview
                 firstName={firstName}
