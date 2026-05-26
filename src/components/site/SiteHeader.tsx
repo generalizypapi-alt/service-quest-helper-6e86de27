@@ -9,7 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ThemeToggle } from "@/components/site/ThemeToggle";
 
 const navItems = [
   { to: "/services", label: "Services" },
@@ -47,7 +46,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <ThemeToggle />
+
 
           {session ? (
             <DropdownMenu>
