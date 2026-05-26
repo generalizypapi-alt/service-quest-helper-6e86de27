@@ -47,6 +47,8 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
+          <ThemeToggle />
+
           {session ? (
             <DropdownMenu>
               <DropdownMenuTrigger className="size-9 rounded-full bg-ink text-surface text-sm font-medium flex items-center justify-center hover:bg-brand transition">
