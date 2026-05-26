@@ -46,7 +46,7 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <ThemeToggle />
+
 
           {session ? (
             <DropdownMenu>
