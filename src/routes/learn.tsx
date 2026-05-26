@@ -131,7 +131,7 @@ function LearnPage() {
             <div className="text-xs font-semibold tracking-widest uppercase text-brand mb-4">Curriculum</div>
             <h2 className="text-3xl font-medium mb-6 text-balance">From first commit to first launch.</h2>
             <p className="text-ink/60 mb-6">Every week builds on the last. By graduation you'll have shipped a working product and a portfolio that stands up to scrutiny.</p>
-            <Link to="/enroll" className="inline-flex bg-brand text-surface py-3 px-6 rounded-full font-medium hover:opacity-90 transition">
+            <Link to="/enroll" className="inline-flex bg-brand text-contrast-foreground py-3 px-6 rounded-full font-medium hover:opacity-90 transition">
               Apply for the next cohort
             </Link>
           </div>
@@ -149,18 +149,18 @@ function LearnPage() {
         </div>
       </section>
 
-      <section className="py-24 bg-ink text-surface px-6">
+      <section className="py-24 bg-contrast text-contrast-foreground px-6">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-16">
           <div>
             <div className="text-xs font-semibold tracking-widest uppercase text-brand mb-4">What you'll get</div>
             <h2 className="text-3xl font-medium mb-6 text-balance">More than a course. A career on-ramp.</h2>
-            <p className="text-surface/70">A learning environment with the seriousness of a real engineering team — because that's where you're heading.</p>
+            <p className="text-contrast-foreground/70">A learning environment with the seriousness of a real engineering team — because that's where you're heading.</p>
           </div>
           <ul className="space-y-4">
             {["12-week structured curriculum", "Weekly 1:1 mentorship calls", "Code reviews on every project", "Live working sessions", "Capstone project shipped to real users", "Portfolio review + interview prep", "Lifetime alumni community", "Certificate of completion"].map((item) => (
-              <li key={item} className="flex items-start gap-3 border-b border-white/10 pb-4">
+              <li key={item} className="flex items-start gap-3 border-b border-contrast-foreground/10 pb-4">
                 <Check className="size-5 text-brand mt-0.5 shrink-0" />
-                <span className="text-surface/90">{item}</span>
+                <span className="text-contrast-foreground/90">{item}</span>
               </li>
             ))}
           </ul>
@@ -187,7 +187,7 @@ function LearnPage() {
           <p className="text-ink/60 max-w-[48ch] text-pretty">
             Scholarships available for exceptional candidates. Apply now and we'll review every application personally.
           </p>
-          <Link to="/enroll" className="bg-brand text-surface py-3 px-6 rounded-full font-medium hover:opacity-90 transition">
+          <Link to="/enroll" className="bg-brand text-contrast-foreground py-3 px-6 rounded-full font-medium hover:opacity-90 transition">
             Apply now
           </Link>
         </div>

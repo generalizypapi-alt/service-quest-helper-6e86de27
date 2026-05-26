@@ -372,7 +372,7 @@ function BookPage() {
                 </div>
 
                 {!isCustom ? (
-                  <div className="rounded-2xl bg-ink text-surface p-6 flex flex-col gap-4">
+                  <div className="rounded-2xl bg-contrast text-contrast-foreground p-6 flex flex-col gap-4">
                     <div className="flex items-baseline justify-between">
                       <span className="text-sm opacity-70">Project total</span>
                       <span className="text-2xl font-medium">${total.toLocaleString()}</span>
@@ -384,7 +384,7 @@ function BookPage() {
                     <div className="text-xs opacity-60">Remaining ${(total - deposit).toLocaleString()} invoiced at handover.</div>
                   </div>
                 ) : (
-                  <div className="rounded-2xl bg-ink text-surface p-6 flex flex-col gap-2">
+                  <div className="rounded-2xl bg-contrast text-contrast-foreground p-6 flex flex-col gap-2">
                     <div className="text-sm opacity-70">Pricing</div>
                     <div className="text-2xl font-medium">Custom quote on request</div>
                     <div className="text-xs opacity-60">We'll send a fixed-scope proposal within 24 hours.</div>

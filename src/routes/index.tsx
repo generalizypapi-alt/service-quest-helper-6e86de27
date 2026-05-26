@@ -190,7 +190,7 @@ function HomePage() {
       <Testimonials />
 
       {/* Founder teaser */}
-      <section className="py-24 bg-ink text-surface px-6">
+      <section className="py-24 bg-contrast text-contrast-foreground px-6">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row gap-16 items-center">
           <div className="md:w-1/3 shrink-0">
             <img
@@ -199,13 +199,13 @@ function HomePage() {
               loading="lazy"
               width={800}
               height={1000}
-              className="w-full aspect-[4/5] object-cover rounded-xl outline-1 -outline-offset-1 outline-white/5"
+              className="w-full aspect-[4/5] object-cover rounded-xl outline-1 -outline-offset-1 outline-contrast-foreground/5"
             />
           </div>
           <div className="md:w-2/3">
             <div className="text-xs font-semibold tracking-widest uppercase text-brand mb-4">Founder note</div>
             <h2 className="text-3xl md:text-4xl font-medium mb-8 max-w-[28ch] text-balance">Crafted with heritage, engineered for the global stage.</h2>
-            <p className="text-lg text-surface/70 max-w-[52ch] mb-8 text-pretty">
+            <p className="text-lg text-contrast-foreground/70 max-w-[52ch] mb-8 text-pretty">
               "OKIKE was founded on the belief that African tech talent shouldn't just participate in the global economy — it should lead it. We combine local intelligence with world-class engineering."
             </p>
             <Link to="/about" className="inline-flex items-center gap-2 text-brand font-medium hover:gap-3 transition-all">
@@ -250,7 +250,7 @@ function PricingCard({ tier, price, period, desc, cta, highlight }: { tier: stri
         <div className="text-sm text-ink/40 mt-1">{period}</div>
       </div>
       <p className="text-sm text-ink/60 text-pretty">{desc}</p>
-      <Link to="/book" className={`w-full py-3 rounded-full text-sm font-medium text-center transition ${highlight ? "bg-brand text-surface ring-1 ring-brand hover:opacity-90" : "bg-ink text-surface hover:bg-ink/90"}`}>
+      <Link to="/book" className={`w-full py-3 rounded-full text-sm font-medium text-center transition ${highlight ? "bg-brand text-surface ring-1 ring-brand hover:opacity-90" : "bg-contrast text-contrast-foreground hover:bg-ink/90"}`}>
         {cta}
       </Link>
     </div>

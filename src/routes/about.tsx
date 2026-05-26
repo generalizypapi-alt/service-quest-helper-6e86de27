@@ -119,10 +119,10 @@ function AboutPage() {
       </section>
 
       {/* 6. Timeline strip */}
-      <section className="px-6 py-24 bg-ink text-surface">
+      <section className="px-6 py-24 bg-contrast text-contrast-foreground">
         <div className="max-w-7xl mx-auto">
           <div className="text-xs font-semibold tracking-widest uppercase text-brand mb-4">A short history</div>
-          <h2 className="text-3xl md:text-4xl font-medium mb-16 max-w-[28ch] text-balance text-surface">From a single project to a practice.</h2>
+          <h2 className="text-3xl md:text-4xl font-medium mb-16 max-w-[28ch] text-balance text-contrast-foreground">From a single project to a practice.</h2>
           <ol className="grid md:grid-cols-4 gap-8">
             <Milestone year="2023" label="Founded" body="First clients. First shipped product." />
             <Milestone year="2024" label="Academy launch" body="Inaugural cohort graduates and ships." />
@@ -137,7 +137,7 @@ function AboutPage() {
         <div className="max-w-4xl mx-auto text-center flex flex-col items-center gap-8">
           <h2 className="text-3xl md:text-4xl font-medium tracking-tight text-balance">Want to work with us — or learn from us?</h2>
           <div className="flex flex-wrap gap-3 justify-center">
-            <Link to="/book" className="bg-brand text-surface py-3 px-6 rounded-full font-medium hover:opacity-90 transition">Start a project</Link>
+            <Link to="/book" className="bg-brand text-contrast-foreground py-3 px-6 rounded-full font-medium hover:opacity-90 transition">Start a project</Link>
             <Link to="/enroll" className="bg-ink/5 text-ink py-3 px-6 rounded-full font-medium ring-1 ring-ink/5 hover:bg-ink/10 transition">Apply to academy</Link>
           </div>
         </div>
@@ -190,10 +190,10 @@ function Pillar({
 
 function Milestone({ year, label, body }: { year: string; label: string; body: string }) {
   return (
-    <li className="flex flex-col gap-3 border-t border-surface/20 pt-6">
+    <li className="flex flex-col gap-3 border-t border-contrast-foreground/20 pt-6">
       <div className="text-xs uppercase tracking-widest text-brand font-semibold">{year}</div>
-      <div className="text-lg font-medium text-surface">{label}</div>
-      <p className="text-sm text-surface/60">{body}</p>
+      <div className="text-lg font-medium text-contrast-foreground">{label}</div>
+      <p className="text-sm text-contrast-foreground/60">{body}</p>
     </li>
   );
 }
