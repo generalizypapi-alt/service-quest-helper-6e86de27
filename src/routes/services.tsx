@@ -269,7 +269,7 @@ function ServicesPage() {
           </div>
           <div className="flex flex-wrap justify-center gap-3">
             {stack.map((s) => (
-              <span key={s} className="px-5 py-2.5 rounded-full bg-surface/5 ring-1 ring-surface/10 text-sm font-medium text-surface/90 hover:bg-surface/10 transition">
+              <span key={s} className="px-5 py-2.5 rounded-full bg-contrast-foreground/5 ring-1 ring-contrast-foreground/10 text-sm font-medium text-contrast-foreground/90 hover:bg-contrast-foreground/10 transition">
                 {s}
               </span>
             ))}
@@ -337,7 +337,7 @@ function ServicesPage() {
           </h2>
           <p className="text-ink/60 max-w-[48ch] text-pretty">Have a project in mind? Tell us what you&apos;re building — we&apos;ll respond within 24 hours with next steps and a quote.</p>
           <div className="flex flex-wrap gap-3 justify-center">
-            <Link to="/book" className="bg-brand text-surface py-3 px-6 rounded-full font-medium hover:opacity-90 transition">Book a call</Link>
+            <Link to="/book" className="bg-brand text-brand-foreground py-3 px-6 rounded-full font-medium hover:opacity-90 transition">Book a call</Link>
             <Link to="/book" className="bg-ink text-surface py-3 px-6 rounded-full font-medium hover:bg-ink/90 transition">Start a project</Link>
             <Link to="/contact" className="bg-ink/5 text-ink py-3 px-6 rounded-full font-medium ring-1 ring-ink/10 hover:bg-ink/10 transition">Send an inquiry</Link>
           </div>

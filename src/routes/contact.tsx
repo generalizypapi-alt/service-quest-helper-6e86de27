@@ -65,7 +65,7 @@ function ContactPage() {
           <Field label="Name" name="name" required />
           <Field label="Email" name="email" type="email" required />
           <TextArea label="Message" name="message" required minLength={5} rows={6} />
-          <button type="submit" disabled={busy} className="bg-brand text-surface py-3 px-6 rounded-full font-medium hover:opacity-90 transition disabled:opacity-50 self-start">
+          <button type="submit" disabled={busy} className="bg-brand text-brand-foreground py-3 px-6 rounded-full font-medium hover:opacity-90 transition disabled:opacity-50 self-start">
             {busy ? "Sending…" : "Send message"}
           </button>
         </form>

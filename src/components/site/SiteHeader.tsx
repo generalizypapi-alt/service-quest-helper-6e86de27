@@ -54,7 +54,7 @@ export function SiteHeader() {
 
           {session ? (
             <DropdownMenu>
-              <DropdownMenuTrigger className="size-9 rounded-full bg-ink text-surface text-sm font-medium flex items-center justify-center hover:bg-brand transition">
+              <DropdownMenuTrigger className="size-9 rounded-full bg-ink text-surface text-sm font-medium flex items-center justify-center hover:bg-brand hover:text-brand-foreground transition">
                 {initial}
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56">
@@ -86,7 +86,7 @@ export function SiteHeader() {
               </Link>
               <Link
                 to="/book"
-                className="group text-sm font-medium bg-ink text-surface py-2 pl-5 pr-4 inline-flex items-center gap-1.5 rounded-full hover:bg-brand transition-colors"
+                className="group text-sm font-medium bg-ink text-surface py-2 pl-5 pr-4 inline-flex items-center gap-1.5 rounded-full hover:bg-brand hover:text-brand-foreground transition-colors"
               >
                 Get Started
                 <ArrowUpRight className="size-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

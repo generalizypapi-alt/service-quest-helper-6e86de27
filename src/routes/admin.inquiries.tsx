@@ -117,7 +117,7 @@ function InquiriesPage() {
                     await load(); setOpen(null);
                   } catch (e: any) { toast.error(e.message); }
                 }}
-                className="px-4 py-2 rounded-full text-sm bg-brand text-surface ml-auto"
+                className="px-4 py-2 rounded-full text-sm bg-brand text-brand-foreground ml-auto"
               >Accept & convert to project</button>
             </div>
           </div>

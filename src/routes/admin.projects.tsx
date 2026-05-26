@@ -169,7 +169,7 @@ function AdminProjects() {
                     try { await postUp({ data: { project_id: open.id, message: newMsg } }); setNewMsg(""); toast.success("Posted"); await loadDetail(open.id); }
                     catch (err: any) { toast.error(err.message); }
                   }}
-                  className="px-4 py-2 rounded-xl bg-brand text-surface text-sm font-medium"
+                  className="px-4 py-2 rounded-xl bg-brand text-brand-foreground text-sm font-medium"
                 >Post</button>
               </div>
               <ul className="mt-3 flex flex-col gap-2">

@@ -63,7 +63,7 @@ function LoginPage() {
           <button
             onClick={onGoogle}
             disabled={busy}
-            className="w-full py-3 rounded-full bg-ink text-surface text-sm font-medium hover:bg-brand transition disabled:opacity-50"
+            className="w-full py-3 rounded-full bg-ink text-surface text-sm font-medium hover:bg-brand hover:text-brand-foreground transition disabled:opacity-50"
           >
             Continue with Google
           </button>
@@ -100,7 +100,7 @@ function LoginPage() {
             />
             <button
               disabled={busy}
-              className="w-full py-3 rounded-full bg-brand text-surface text-sm font-medium hover:opacity-90 transition disabled:opacity-50"
+              className="w-full py-3 rounded-full bg-brand text-brand-foreground text-sm font-medium hover:opacity-90 transition disabled:opacity-50"
             >
               {busy ? "…" : "Sign in"}
             </button>
