@@ -67,7 +67,7 @@ function EnrollPage() {
             <Select label="Experience level" name="experience_level" required options={["Complete beginner", "Some self-taught experience", "Bootcamp graduate", "Working developer (skill-up)"]} />
           </div>
           <TextArea label="Why do you want to join? What do you want to build?" name="goals" required minLength={10} rows={8} placeholder="Tell us your story — current situation, what you've tried, what you want to ship." />
-          <button type="submit" disabled={busy} className="bg-brand text-surface py-3 px-6 rounded-full font-medium hover:opacity-90 transition disabled:opacity-50 self-start">
+          <button type="submit" disabled={busy} className="bg-brand text-brand-foreground py-3 px-6 rounded-full font-medium hover:opacity-90 transition disabled:opacity-50 self-start">
             {busy ? "Sending…" : "Submit application"}
           </button>
         </form>

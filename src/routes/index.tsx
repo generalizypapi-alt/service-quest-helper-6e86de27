@@ -225,7 +225,7 @@ function HomePage() {
             Whether you need a partner to ship your next product or a path to becoming the engineer behind it — OKIKE is built for both.
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
-            <Link to="/book" className="bg-brand text-surface py-3 px-6 rounded-full font-medium hover:opacity-90 transition">
+            <Link to="/book" className="bg-brand text-brand-foreground py-3 px-6 rounded-full font-medium hover:opacity-90 transition">
               Start a project
             </Link>
             <Link to="/enroll" className="bg-ink/5 text-ink py-3 px-6 rounded-full font-medium ring-1 ring-ink/5 hover:bg-ink/10 transition">
@@ -242,7 +242,7 @@ function PricingCard({ tier, price, period, desc, cta, highlight }: { tier: stri
   return (
     <div className={`p-8 bg-surface rounded-2xl flex flex-col gap-6 relative overflow-hidden ${highlight ? "ring-1 ring-brand/30" : "ring-1 ring-ink/5"}`}>
       {highlight && (
-        <div className="absolute top-0 right-0 bg-brand text-surface text-[10px] px-3 py-1 font-semibold uppercase tracking-wider">Most popular</div>
+        <div className="absolute top-0 right-0 bg-brand text-brand-foreground text-[10px] px-3 py-1 font-semibold uppercase tracking-wider">Most popular</div>
       )}
       <h3 className="text-lg font-medium">{tier}</h3>
       <div>
@@ -250,7 +250,7 @@ function PricingCard({ tier, price, period, desc, cta, highlight }: { tier: stri
         <div className="text-sm text-ink/40 mt-1">{period}</div>
       </div>
       <p className="text-sm text-ink/60 text-pretty">{desc}</p>
-      <Link to="/book" className={`w-full py-3 rounded-full text-sm font-medium text-center transition ${highlight ? "bg-brand text-surface ring-1 ring-brand hover:opacity-90" : "bg-contrast text-contrast-foreground hover:bg-ink/90"}`}>
+      <Link to="/book" className={`w-full py-3 rounded-full text-sm font-medium text-center transition ${highlight ? "bg-brand text-brand-foreground ring-1 ring-brand hover:opacity-90" : "bg-contrast text-contrast-foreground hover:bg-ink/90"}`}>
         {cta}
       </Link>
     </div>

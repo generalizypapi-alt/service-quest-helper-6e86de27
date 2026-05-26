@@ -292,7 +292,7 @@ function BookPage() {
                           on ? "ring-brand bg-brand/5" : "ring-ink/10 hover:ring-ink/30 bg-surface"
                         }`}
                       >
-                        <div className={`size-5 rounded-md flex items-center justify-center shrink-0 mt-0.5 ${on ? "bg-brand text-surface" : "ring-1 ring-ink/20"}`}>
+                        <div className={`size-5 rounded-md flex items-center justify-center shrink-0 mt-0.5 ${on ? "bg-brand text-brand-foreground" : "ring-1 ring-ink/20"}`}>
                           {on && <Check className="size-3" />}
                         </div>
                         <div className="flex-1">
@@ -397,7 +397,7 @@ function BookPage() {
                       type="button"
                       disabled
                       title="Online deposit payments coming soon — submit your brief and we'll send a payment link."
-                      className="flex-1 bg-brand/40 text-surface py-3 px-6 rounded-full font-medium cursor-not-allowed flex items-center justify-center gap-2"
+                      className="flex-1 bg-brand/40 text-brand-foreground py-3 px-6 rounded-full font-medium cursor-not-allowed flex items-center justify-center gap-2"
                     >
                       <Lock className="size-4" /> Pay ${deposit.toLocaleString()} deposit (coming soon)
                     </button>
@@ -434,7 +434,7 @@ function BookPage() {
                   type="button"
                   onClick={next}
                   disabled={!canAdvance()}
-                  className="flex items-center gap-2 bg-brand text-surface py-2.5 px-5 rounded-full text-sm font-medium hover:opacity-90 transition disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 bg-brand text-brand-foreground py-2.5 px-5 rounded-full text-sm font-medium hover:opacity-90 transition disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Continue <ArrowRight className="size-4" />
                 </button>

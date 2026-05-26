@@ -55,7 +55,7 @@ function SiteSettingsPage() {
         <section key={g.key} className="bg-card rounded-2xl p-6 ring-1 ring-ink/5 flex flex-col gap-3">
           <div className="flex justify-between items-center">
             <h2 className="font-medium">{g.label}</h2>
-            <button onClick={() => saveKey(g.key)} className="px-4 py-2 rounded-full bg-brand text-surface text-sm font-medium">Save</button>
+            <button onClick={() => saveKey(g.key)} className="px-4 py-2 rounded-full bg-brand text-brand-foreground text-sm font-medium">Save</button>
           </div>
           {g.fields.map((f) => (
             <label key={f.name} className="flex flex-col gap-1 text-sm">

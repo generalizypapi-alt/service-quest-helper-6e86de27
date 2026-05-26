@@ -116,7 +116,7 @@ function ContentPage() {
     <div className="flex flex-col gap-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-medium">{cfg.title}</h1>
-        <button onClick={startNew} className="px-4 py-2 rounded-full bg-brand text-surface text-sm font-medium">+ New</button>
+        <button onClick={startNew} className="px-4 py-2 rounded-full bg-brand text-brand-foreground text-sm font-medium">+ New</button>
       </div>
 
       <div className="bg-card rounded-2xl ring-1 ring-ink/5 overflow-hidden">
@@ -182,7 +182,7 @@ function ContentPage() {
             ))}
             <div className="flex justify-end gap-2 pt-2">
               <button onClick={() => setEditing(null)} className="px-4 py-2 rounded-full text-sm">Cancel</button>
-              <button onClick={save} className="px-4 py-2 rounded-full bg-brand text-surface text-sm font-medium">Save</button>
+              <button onClick={save} className="px-4 py-2 rounded-full bg-brand text-brand-foreground text-sm font-medium">Save</button>
             </div>
           </div>
         </div>

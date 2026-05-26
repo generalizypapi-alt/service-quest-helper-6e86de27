@@ -122,7 +122,7 @@ function SignupPage() {
             />
             <button
               disabled={busy}
-              className="w-full py-3 rounded-full bg-brand text-surface text-sm font-medium hover:opacity-90 transition disabled:opacity-50"
+              className="w-full py-3 rounded-full bg-brand text-brand-foreground text-sm font-medium hover:opacity-90 transition disabled:opacity-50"
             >
               {busy ? "…" : "Create account"}
             </button>
