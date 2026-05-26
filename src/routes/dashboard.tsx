@@ -25,7 +25,7 @@ import {
   Send,
   Upload,
   FolderPlus,
-  UserPlus,
+  
   Users2,
   MessagesSquare,
   CalendarDays,
@@ -606,5 +606,3 @@ function SectionPlaceholder({ section }: { section: Section }) {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const _unused = { UserPlus };
