@@ -33,9 +33,9 @@ export function SiteFooter() {
             A founder-led studio building software, AI tools and digital products that solve real problems — and training the next generation of African engineers.
           </p>
           <ul className="flex flex-col gap-3 text-sm text-surface/70">
-            <li className="flex items-center gap-3"><Mail className="size-4 text-brand" /> okikeenterprises@gmail.com</li>
-            <li className="flex items-center gap-3"><Phone className="size-4 text-brand" /> Available on request</li>
-            <li className="flex items-center gap-3"><MapPin className="size-4 text-brand" /> Nigeria · Remote worldwide</li>
+            <li className="flex items-center gap-3"><Mail className="size-4 text-brand" /><span>okikeenterprises@gmail.com</span></li>
+            <li className="flex items-center gap-3"><Phone className="size-4 text-brand" /><span>Available on request</span></li>
+            <li className="flex items-center gap-3"><MapPin className="size-4 text-brand" /><span>Nigeria · Remote worldwide</span></li>
           </ul>
           <div className="flex items-center gap-2 pt-2">
             {[
