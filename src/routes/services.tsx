@@ -269,7 +269,7 @@ function ServicesPage() {
           </div>
           <div className="flex flex-wrap justify-center gap-3">
             {stack.map((s) => (
-              <span key={s} className="px-5 py-2.5 rounded-full bg-surface/5 ring-1 ring-surface/10 text-sm font-medium text-surface/90 hover:bg-surface/10 transition">
+              <span key={s} className="px-5 py-2.5 rounded-full bg-contrast-foreground/5 ring-1 ring-contrast-foreground/10 text-sm font-medium text-contrast-foreground/90 hover:bg-contrast-foreground/10 transition">
                 {s}
               </span>
             ))}
