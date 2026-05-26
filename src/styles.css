@@ -65,9 +65,9 @@
   --primary-foreground: var(--brand-foreground);
   --secondary: oklch(0.955 0.005 80);
   --secondary-foreground: var(--ink);
-  --muted: oklch(0.955 0.005 80);
-  --muted-foreground: oklch(0.45 0.013 50);
-  --accent: oklch(0.95 0.015 60);
+  --muted: oklch(0.96 0.005 95);
+  --muted-foreground: oklch(0.45 0.005 90);
+  --accent: oklch(0.95 0.05 95);
   --accent-foreground: var(--brand);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
