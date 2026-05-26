@@ -261,7 +261,7 @@ function ServicesPage() {
       </section>
 
       {/* 5. TECH STACK */}
-      <section className="py-24 bg-ink text-surface px-6">
+      <section className="py-24 bg-contrast text-contrast-foreground px-6">
         <div className="max-w-7xl mx-auto flex flex-col items-center text-center gap-10">
           <div className="flex flex-col gap-4 items-center">
             <div className="text-xs font-semibold tracking-widest uppercase text-brand">Technology we use</div>

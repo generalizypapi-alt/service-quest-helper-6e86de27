@@ -158,7 +158,7 @@ function LearnPage() {
           </div>
           <ul className="space-y-4">
             {["12-week structured curriculum", "Weekly 1:1 mentorship calls", "Code reviews on every project", "Live working sessions", "Capstone project shipped to real users", "Portfolio review + interview prep", "Lifetime alumni community", "Certificate of completion"].map((item) => (
-              <li key={item} className="flex items-start gap-3 border-b border-white/10 pb-4">
+              <li key={item} className="flex items-start gap-3 border-b border-contrast-foreground/10 pb-4">
                 <Check className="size-5 text-brand mt-0.5 shrink-0" />
                 <span className="text-contrast-foreground/90">{item}</span>
               </li>
