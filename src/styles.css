@@ -61,9 +61,9 @@
   --card-foreground: var(--ink);
   --popover: var(--surface);
   --popover-foreground: var(--ink);
-  --primary: var(--brand);
-  --primary-foreground: var(--brand-foreground);
-  --secondary: oklch(0.955 0.005 80);
+  --primary: oklch(0.16 0.004 90);           /* black primary */
+  --primary-foreground: oklch(0.992 0.003 95);
+  --secondary: oklch(0.96 0.005 95);
   --secondary-foreground: var(--ink);
   --muted: oklch(0.96 0.005 95);
   --muted-foreground: oklch(0.45 0.005 90);
