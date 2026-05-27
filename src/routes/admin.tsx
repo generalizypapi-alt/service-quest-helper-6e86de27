@@ -169,12 +169,17 @@ function AdminLayout() {
               </div>
             </div>
 
-            <button className="rounded-xl p-2.5 ring-1 ring-ink/10 hover:bg-ink/5" aria-label="Console">
-              <Terminal className="size-4 text-ink/70" />
+            <button className="inline-flex items-center gap-2 rounded-xl bg-brand text-brand-foreground px-3 md:px-4 py-2.5 text-sm font-semibold hover:opacity-90 ring-1 ring-brand/40 shadow-[0_0_24px_-8px_oklch(0.72_0.15_55/0.6)]">
+              <Plus className="size-4" />
+              <span className="hidden sm:inline">Quick Action</span>
+            </button>
+            <button className="relative rounded-xl p-2.5 ring-1 ring-ink/10 hover:bg-ink/5" aria-label="Messages">
+              <MessageSquare className="size-4 text-ink/70" />
+              <span className="absolute -top-1 -right-1 size-4 rounded-full bg-brand text-[10px] font-semibold text-brand-foreground grid place-items-center">12</span>
             </button>
             <button className="relative rounded-xl p-2.5 ring-1 ring-ink/10 hover:bg-ink/5" aria-label="Notifications">
               <Bell className="size-4 text-ink/70" />
-              <span className="absolute -top-1 -right-1 size-4 rounded-full bg-brand text-[10px] font-semibold text-brand-foreground grid place-items-center">12</span>
+              <span className="absolute -top-1 -right-1 size-4 rounded-full bg-brand text-[10px] font-semibold text-brand-foreground grid place-items-center">7</span>
             </button>
             <button
               onClick={() => setDark((d) => !d)}
@@ -183,11 +188,11 @@ function AdminLayout() {
             >
               {dark ? <Moon className="size-4 text-ink/70" /> : <Sun className="size-4 text-ink/70" />}
             </button>
-            <button className="flex items-center gap-2 rounded-xl pl-1 pr-2 py-1 ring-1 ring-ink/10 hover:bg-ink/5">
-              <div className="size-8 rounded-full bg-brand/20 ring-2 ring-brand/30 grid place-items-center text-xs font-semibold text-brand">
+            <button className="relative">
+              <div className="size-9 rounded-full bg-brand/20 ring-2 ring-brand/30 grid place-items-center text-xs font-semibold text-brand">
                 {initial}
               </div>
-              <ChevronDown className="size-3 text-ink/50" />
+              <span className="absolute bottom-0 right-0 size-2.5 rounded-full bg-emerald-400 ring-2 ring-[oklch(0.13_0.01_50)]" />
             </button>
           </header>
 
