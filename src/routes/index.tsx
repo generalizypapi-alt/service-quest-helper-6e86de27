@@ -24,7 +24,20 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const [packages, setPackages] = useState<PublicPackage[]>([]);
+  const [partners, setPartners] = useState<PublicPartner[]>([]);
+  const [founder, setFounder] = useState<{ quote?: string; name?: string }>({});
+
+  useEffect(() => {
+    getPackages().then((rows) => setPackages(rows.slice(0, 3)));
+    getPartners().then(setPartners);
+    getSettings(["founder_quote", "founder_name"]).then((s) =>
+      setFounder({ quote: s.founder_quote, name: s.founder_name }),
+    );
+  }, []);
+
   return (
+
     <SiteLayout>
       {/* Hero — magazine layout with product mockup */}
       <section className="relative overflow-hidden border-b border-ink/5">
