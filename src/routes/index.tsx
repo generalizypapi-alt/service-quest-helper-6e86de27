@@ -1,12 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowUpRight, Sparkles, Zap, Bot, ShieldCheck, Users, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Metrics } from "@/components/site/Metrics";
 import { Testimonials } from "@/components/site/Testimonials";
+import { getPackages, getPartners, getSettings, type PublicPackage, type PublicPartner } from "@/lib/public-content";
 import servicesImg from "@/assets/services-image.jpg";
 import learnImg from "@/assets/learn-image.jpg";
 import founderImg from "@/assets/founder.jpg";
 import heroDashboard from "@/assets/hero-dashboard.jpg";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -21,7 +24,20 @@ export const Route = createFileRoute("/")({
 });
 
 function HomePage() {
+  const [packages, setPackages] = useState<PublicPackage[]>([]);
+  const [partners, setPartners] = useState<PublicPartner[]>([]);
+  const [founder, setFounder] = useState<{ quote?: string; name?: string }>({});
+
+  useEffect(() => {
+    getPackages().then((rows) => setPackages(rows.slice(0, 3)));
+    getPartners().then(setPartners);
+    getSettings(["founder_quote", "founder_name"]).then((s) =>
+      setFounder({ quote: s.founder_quote, name: s.founder_name }),
+    );
+  }, []);
+
   return (
+
     <SiteLayout>
       {/* Hero — magazine layout with product mockup */}
       <section className="relative overflow-hidden border-b border-ink/5">
@@ -104,19 +120,27 @@ function HomePage() {
         </div>
 
         {/* Trusted by */}
-        <div className="relative max-w-7xl mx-auto px-6 pb-16">
-          <div className="text-center text-[11px] font-semibold tracking-[0.2em] uppercase text-ink/40 mb-6">
-            Trusted by students, startups & businesses
+        {partners.length > 0 && (
+          <div className="relative max-w-7xl mx-auto px-6 pb-16">
+            <div className="text-center text-[11px] font-semibold tracking-[0.2em] uppercase text-ink/40 mb-6">
+              Trusted by students, startups & businesses
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-ink/50">
+              {partners.map((p) =>
+                p.logo_url ? (
+                  <a key={p.id} href={p.url ?? "#"} target={p.url ? "_blank" : undefined} rel="noreferrer" className="opacity-70 hover:opacity-100 transition">
+                    <img src={p.logo_url} alt={p.name} className="h-8 w-auto object-contain" />
+                  </a>
+                ) : (
+                  <span key={p.id} className="text-lg font-semibold tracking-tight hover:text-ink/80 transition">
+                    {p.name}
+                  </span>
+                ),
+              )}
+            </div>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-ink/50">
-            {["NACOS", "CampusFlow", "StudyHub", "EduCare", "CodeCircle"].map((name) => (
-              <span key={name} className="text-lg font-semibold tracking-tight hover:text-ink/80 transition">
-                {name}
-              </span>
-            ))}
-            <span className="text-sm italic text-ink/40">and more…</span>
-          </div>
-        </div>
+        )}
+
       </section>
 
 
@@ -179,10 +203,25 @@ function HomePage() {
             <p className="text-ink/60 text-pretty">From a single landing page to a custom SaaS — fixed scope, fixed timeline.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            <PricingCard tier="Starter Site" price="From $800" period="/ 1 week" desc="A polished landing page with a contact form and analytics — perfect for launching." cta="Inquire" highlight={false} />
-            <PricingCard tier="Business Site" price="From $2,500" period="/ 2 weeks" desc="Multi-page marketing site with CMS, forms, and integrations." cta="Book Consultation" highlight={true} />
-            <PricingCard tier="Custom Software" price="Custom" period="Quote" desc="Internal tools, dashboards, and SaaS MVPs scoped around your business." cta="Contact" highlight={false} />
+            {(packages.length > 0
+              ? packages.map((p) => ({
+                  tier: p.name,
+                  price: p.request_quote || p.price == null ? "Custom" : `From ${p.currency === "USD" ? "$" : ""}${Number(p.price).toLocaleString()}`,
+                  period: p.tagline ?? "",
+                  desc: (p.features[0] as string) ?? "",
+                  cta: p.request_quote ? "Request quote" : "Inquire",
+                  highlight: p.featured,
+                }))
+              : [
+                  { tier: "Starter Site", price: "From $800", period: "/ 1 week", desc: "A polished landing page with a contact form and analytics.", cta: "Inquire", highlight: false },
+                  { tier: "Business Site", price: "From $2,500", period: "/ 2 weeks", desc: "Multi-page marketing site with CMS, forms, and integrations.", cta: "Book Consultation", highlight: true },
+                  { tier: "Custom Software", price: "Custom", period: "Quote", desc: "Internal tools, dashboards, and SaaS MVPs scoped around your business.", cta: "Contact", highlight: false },
+                ]
+            ).map((c) => (
+              <PricingCard key={c.tier} {...c} />
+            ))}
           </div>
+
         </div>
       </section>
 
@@ -206,8 +245,9 @@ function HomePage() {
             <div className="text-xs font-semibold tracking-widest uppercase text-brand mb-4">Founder note</div>
             <h2 className="text-3xl md:text-4xl font-medium mb-8 max-w-[28ch] text-balance">Crafted with heritage, engineered for the global stage.</h2>
             <p className="text-lg text-contrast-foreground/70 max-w-[52ch] mb-8 text-pretty">
-              "OKIKE was founded on the belief that African tech talent shouldn't just participate in the global economy — it should lead it. We combine local intelligence with world-class engineering."
+              {founder.quote ?? `"OKIKE was founded on the belief that African tech talent shouldn't just participate in the global economy — it should lead it. We combine local intelligence with world-class engineering."`}
             </p>
+
             <Link to="/about" className="inline-flex items-center gap-2 text-brand font-medium hover:gap-3 transition-all">
               Read the full story <ArrowUpRight className="size-4" />
             </Link>
