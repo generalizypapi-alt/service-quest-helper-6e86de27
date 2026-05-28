@@ -1,71 +1,59 @@
-# Backend, CMS & Client Portal
+# Replace mock data with live data + functional wiring
 
-## What you'll get
+Scope is wide so I'm grouping by surface. Every section ends in a fully working page that pulls from Supabase (no hardcoded arrays) and every button either routes somewhere real, opens a working dialog, or is removed.
 
-1. **Auth** — Email/password + Google sign-in. Admin role for `okikeenterprises@gmail.com`; everyone else is a client.
-2. **Public site reads from the database** — services, packages, portfolio, partners, team, about content all editable from the admin CMS instead of hardcoded.
-3. **Admin CMS** at `/admin` — protected, only the admin email can access. Manage:
-   - Services, Packages (with pricing + features), Add-ons
-   - Portfolio projects, Partners, Team members
-   - About / hero copy (key-value site settings)
-   - Inquiries → convert into client projects
-   - Active client projects: update stage, milestones, notes
-4. **Client portal** at `/dashboard` — any signed-in client sees their projects, current stage, milestone progress bar, and admin notes. Auto-linked to inquiries by email.
-5. **Live updates** — Realtime subscription so status changes appear without refresh.
+## 1. Shared building blocks
 
-## Stages & milestones
+- **`src/lib/public-content.ts`** — central client helpers: `getServices()`, `getPackages()`, `getPortfolio()`, `getPartners()`, `getTeam()`, `getSiteSetting(key)`. All published-row filtered, ordered by `position`.
+- **`src/lib/dashboard.functions.ts`** (server fn, `requireSupabaseAuth`) — returns the signed-in user's `projects`, `milestones`, `updates`, plus aggregate `stats` (active count, completed count, next-due milestone). One round-trip.
+- **`src/lib/admin-stats.functions.ts`** (server fn, admin-only) — returns: users count (from `profiles`), inquiries count + recent, projects + stage breakdown + recent 5, role distribution from `user_roles`, daily counts of inquiries + projects + signups over last 14 days for the line chart.
 
-Stages: `submitted → reviewing → accepted | declined → in_progress → completed`
-Milestones (only when in_progress): Design, Build, Review, Launch — each can be `pending | active | done` with optional note.
+## 2. Public site
 
-## Database (new tables)
+- **`/` (index.tsx)** — replace the three hardcoded `PricingCard`s with `packages` from DB (top 3 published, featured one highlighted). Replace the hardcoded "Trusted by" string list with `partners` rows (fallback: hide block if empty). Replace founder quote with `site_settings['founder_quote']` value (fallback to current copy).
+- **`/services` (services.tsx)** — `coreServices` grid reads from `services` table; only fall back to current copy if DB is empty. `PortfolioGrid` already DB-wired.
+- **`/about` (about.tsx)** — team grid reads from `team_members`; about/hero copy from `site_settings`. Falls back to current static copy when key missing.
 
-- `profiles` (id, user_id, full_name, email, avatar_url) — auto-created on signup via trigger
-- `user_roles` (user_id, role enum: admin/client) + `has_role()` security-definer function
-- `site_settings` (key, value jsonb) — hero copy, about, contact info
-- `services` (title, description, icon, order, published)
-- `packages` (name, tagline, price, currency, features jsonb, order, featured, published)
-- `addons` (name, description, price, order, published)
-- `portfolio_items` (title, description, image_url, url, tags, order, published)
-- `partners` (name, logo_url, url, order, published)
-- `team_members` (name, role, bio, image_url, order, published)
-- `client_projects` (client_user_id, inquiry_id, title, package_name, total, deposit, stage, current_milestone, admin_notes, created_at)
-- `project_milestones` (project_id, name, status, note, position)
-- `project_updates` (project_id, message, created_by, created_at) — admin-posted updates
+## 3. Client dashboard (`/dashboard`)
 
-RLS: public can read `published=true` rows on content tables. Clients see only their own projects + milestones + updates. Admins can do everything via `has_role(uid, 'admin')`.
+- Trim from a packed 2-row × 5-stat layout to a clean **2-column responsive grid**:
+  - Hero strip (greeting + primary CTA)
+  - Stats row (3 real tiles: Active Projects, Completed, Next milestone)
+  - Active projects list (real `client_projects` for this user with milestone progress bars)
+  - Right rail: recent project updates feed + Quick links
+- Remove the mock "Continue Learning" card, mock teammate avatars, mock "AI Requests / Files Uploaded" stats, mock "78%" progress numbers — replaced by computed progress from milestones (done/total).
+- Realtime subscribe to `client_projects` + `project_milestones` + `project_updates` filtered to this user (already RLS-scoped).
+- Functional buttons:
+  - "Continue Project" → scrolls to / opens the top active project
+  - "Open AI Assistant" → routes to a working `/dashboard?section=ai` panel that calls Lovable AI Gateway (`google/gemini-2.5-flash`) via a server fn `askAssistant`
+  - Sidebar sections (Messages, Files, Calendar, etc.) that have no data yet show an honest empty state, not a placeholder card
+  - Search field is removed from header until wired (keeps notifications + profile)
+  - Sign-out works (already)
 
-Realtime enabled on `client_projects`, `project_milestones`, `project_updates`.
+## 4. Admin dashboard (`/admin` overview)
 
-Inquiries auto-link: when a signed-in user submits the builder, `client_user_id` is set. When admin "accepts" an inquiry, it's promoted to `client_projects` and the user (matched by email) sees it in their dashboard.
+- Replace every `const ...Data = [...]` mock with values from `admin-stats.functions.ts`:
+  - 6 stat tiles → real counts (Users, Inquiries, Projects running, Completed projects, Pending approvals, Open complaints — drop "Revenue/Uptime" since we don't track them, or compute from `client_projects.total`)
+  - Line chart "Platform Analytics" → 14-day rolling counts of new signups (toggle between Users/Projects/Inquiries from the same payload)
+  - Users-by-role pie → real `user_roles` distribution
+  - Recent Signups → last 5 `profiles`
+  - Recent Projects table → real `client_projects` joined with `profiles` for owner name + computed progress
+  - Platform Activity → unioned recent rows from `project_inquiries`, `client_projects`, `project_updates`, `contact_messages`
+  - Summary tiles → real counts (open inquiries, pending approvals = inquiries.status='reviewing', etc.)
+- Drop the mock "OKIKE Admin AI" suggested-actions list down to actual links: Add user (`/admin/content/...`), Generate report (CSV export server fn), Broadcast (later).
+- System Health card → simple ping to Supabase (returns "Operational" if `select 1` succeeds) — honest, not invented numbers.
 
-## New routes
+## 5. Cleanups
 
-- `/login`, `/signup` — auth pages (email/password + Google button)
-- `/_authenticated/dashboard` — client portal: project list + per-project progress
-- `/_authenticated/admin` — admin shell (guarded by role check)
-  - `/admin` — overview (counts, recent inquiries)
-  - `/admin/inquiries` — list, accept/decline, convert to project
-  - `/admin/projects` — list + edit stage/milestones/notes
-  - `/admin/content/services|packages|addons|portfolio|partners|team` — CRUD tables
-  - `/admin/settings` — site settings (hero, about, contact)
+- Remove `src/assets/dashboard-hero.jpg` usage in the "Continue Learning" mock (no learning data yet).
+- Delete `defaultProjects` fallback in dashboard.
+- Hide nav badges (`Messages: 3`, `Bell: 7`) until real counts exist; show only when count > 0.
 
-Header gets "Sign in" / avatar dropdown ("Dashboard", "Admin" if admin, "Sign out").
+## Tech notes
 
-## Technical notes
+- Client-side reads (public pages, dashboard) use the `supabase` browser client — RLS already permits published-row public reads and user-scoped private reads.
+- Aggregated/admin reads go through `createServerFn` + `requireSupabaseAuth` + `has_role` check to keep the query in one trip and avoid N+1 from RLS.
+- Charts: compute series in the server fn with `date_trunc('day', created_at)` groupings.
+- AI assistant: new server fn `askAssistant` → `https://ai.gateway.lovable.dev/v1/chat/completions` with `LOVABLE_API_KEY`, model `google/gemini-2.5-flash`.
 
-- Server functions (`createServerFn`) for all admin writes; RLS provides defense in depth.
-- `requireSupabaseAuth` middleware on all client/admin server fns.
-- Public content fetched via plain client queries from components (RLS allows `published=true` reads).
-- Seed migration inserts current hardcoded packages/services so the live site doesn't go blank.
-- Admin role assigned by trigger: when a user signs up with `okikeenterprises@gmail.com`, insert `admin` role automatically. Otherwise `client`.
-
-## Build order
-
-1. Migration: tables, enums, RLS, triggers, seed data, realtime
-2. Auth pages + Google OAuth + header avatar
-3. Refactor Services/About/Index pages to read from DB
-4. Client `/dashboard` with realtime progress
-5. Admin shell + content CRUD + inquiry → project conversion + project stage editor
-
-Builder at `/book` will set `client_user_id` if signed in (and prompt to sign up after submit if not).
+After approval I'll ship it in one batch (one migration is not needed — schema already exists).
