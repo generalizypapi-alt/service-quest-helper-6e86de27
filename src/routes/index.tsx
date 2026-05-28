@@ -120,19 +120,27 @@ function HomePage() {
         </div>
 
         {/* Trusted by */}
-        <div className="relative max-w-7xl mx-auto px-6 pb-16">
-          <div className="text-center text-[11px] font-semibold tracking-[0.2em] uppercase text-ink/40 mb-6">
-            Trusted by students, startups & businesses
+        {partners.length > 0 && (
+          <div className="relative max-w-7xl mx-auto px-6 pb-16">
+            <div className="text-center text-[11px] font-semibold tracking-[0.2em] uppercase text-ink/40 mb-6">
+              Trusted by students, startups & businesses
+            </div>
+            <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-ink/50">
+              {partners.map((p) =>
+                p.logo_url ? (
+                  <a key={p.id} href={p.url ?? "#"} target={p.url ? "_blank" : undefined} rel="noreferrer" className="opacity-70 hover:opacity-100 transition">
+                    <img src={p.logo_url} alt={p.name} className="h-8 w-auto object-contain" />
+                  </a>
+                ) : (
+                  <span key={p.id} className="text-lg font-semibold tracking-tight hover:text-ink/80 transition">
+                    {p.name}
+                  </span>
+                ),
+              )}
+            </div>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-ink/50">
-            {["NACOS", "CampusFlow", "StudyHub", "EduCare", "CodeCircle"].map((name) => (
-              <span key={name} className="text-lg font-semibold tracking-tight hover:text-ink/80 transition">
-                {name}
-              </span>
-            ))}
-            <span className="text-sm italic text-ink/40">and more…</span>
-          </div>
-        </div>
+        )}
+
       </section>
 
 
