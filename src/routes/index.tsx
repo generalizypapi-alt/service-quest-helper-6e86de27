@@ -245,8 +245,9 @@ function HomePage() {
             <div className="text-xs font-semibold tracking-widest uppercase text-brand mb-4">Founder note</div>
             <h2 className="text-3xl md:text-4xl font-medium mb-8 max-w-[28ch] text-balance">Crafted with heritage, engineered for the global stage.</h2>
             <p className="text-lg text-contrast-foreground/70 max-w-[52ch] mb-8 text-pretty">
-              "OKIKE was founded on the belief that African tech talent shouldn't just participate in the global economy — it should lead it. We combine local intelligence with world-class engineering."
+              {founder.quote ?? `"OKIKE was founded on the belief that African tech talent shouldn't just participate in the global economy — it should lead it. We combine local intelligence with world-class engineering."`}
             </p>
+
             <Link to="/about" className="inline-flex items-center gap-2 text-brand font-medium hover:gap-3 transition-all">
               Read the full story <ArrowUpRight className="size-4" />
             </Link>
