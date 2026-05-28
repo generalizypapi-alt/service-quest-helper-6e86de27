@@ -203,10 +203,25 @@ function HomePage() {
             <p className="text-ink/60 text-pretty">From a single landing page to a custom SaaS — fixed scope, fixed timeline.</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            <PricingCard tier="Starter Site" price="From $800" period="/ 1 week" desc="A polished landing page with a contact form and analytics — perfect for launching." cta="Inquire" highlight={false} />
-            <PricingCard tier="Business Site" price="From $2,500" period="/ 2 weeks" desc="Multi-page marketing site with CMS, forms, and integrations." cta="Book Consultation" highlight={true} />
-            <PricingCard tier="Custom Software" price="Custom" period="Quote" desc="Internal tools, dashboards, and SaaS MVPs scoped around your business." cta="Contact" highlight={false} />
+            {(packages.length > 0
+              ? packages.map((p) => ({
+                  tier: p.name,
+                  price: p.request_quote || p.price == null ? "Custom" : `From ${p.currency === "USD" ? "$" : ""}${Number(p.price).toLocaleString()}`,
+                  period: p.tagline ?? "",
+                  desc: (p.features[0] as string) ?? "",
+                  cta: p.request_quote ? "Request quote" : "Inquire",
+                  highlight: p.featured,
+                }))
+              : [
+                  { tier: "Starter Site", price: "From $800", period: "/ 1 week", desc: "A polished landing page with a contact form and analytics.", cta: "Inquire", highlight: false },
+                  { tier: "Business Site", price: "From $2,500", period: "/ 2 weeks", desc: "Multi-page marketing site with CMS, forms, and integrations.", cta: "Book Consultation", highlight: true },
+                  { tier: "Custom Software", price: "Custom", period: "Quote", desc: "Internal tools, dashboards, and SaaS MVPs scoped around your business.", cta: "Contact", highlight: false },
+                ]
+            ).map((c) => (
+              <PricingCard key={c.tier} {...c} />
+            ))}
           </div>
+
         </div>
       </section>
 
