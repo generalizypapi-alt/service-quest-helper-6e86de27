@@ -406,10 +406,9 @@ function AdminOverview() {
         <section className="rounded-2xl bg-card ring-1 ring-ink/10 p-5">
           <h3 className="font-semibold text-sm mb-4">System Health</h3>
           <ul className="space-y-3">
-            <HealthRow icon={Server} label="App Server" ok />
             <HealthRow icon={Database} label="Database" ok={dbOk} />
-            <HealthRow icon={Activity} label="Realtime" ok />
           </ul>
+          <Link to="/admin/system-health" className="text-xs text-brand hover:underline mt-3 inline-block">Open status →</Link>
         </section>
       </aside>
     </div>
