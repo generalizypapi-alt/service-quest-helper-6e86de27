@@ -28,6 +28,7 @@ import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
 import { Route as AdminProjectsRouteImport } from './routes/admin.projects'
 import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
 import { Route as AdminInquiriesRouteImport } from './routes/admin.inquiries'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 import { Route as AdminContentTypeRouteImport } from './routes/admin.content.$type'
 
 const ThankYouRoute = ThankYouRouteImport.update({
@@ -125,6 +126,11 @@ const AdminInquiriesRoute = AdminInquiriesRouteImport.update({
   path: '/inquiries',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminContentTypeRoute = AdminContentTypeRouteImport.update({
   id: '/content/$type',
   path: '/content/$type',
@@ -145,6 +151,7 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/projects': typeof AdminProjectsRoute
@@ -166,6 +173,7 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/projects': typeof AdminProjectsRoute
@@ -189,6 +197,7 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/projects': typeof AdminProjectsRoute
@@ -213,6 +222,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/thank-you'
+    | '/admin/analytics'
     | '/admin/inquiries'
     | '/admin/payments'
     | '/admin/projects'
@@ -234,6 +244,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/thank-you'
+    | '/admin/analytics'
     | '/admin/inquiries'
     | '/admin/payments'
     | '/admin/projects'
@@ -256,6 +267,7 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/thank-you'
+    | '/admin/analytics'
     | '/admin/inquiries'
     | '/admin/payments'
     | '/admin/projects'
@@ -416,6 +428,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminInquiriesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/content/$type': {
       id: '/admin/content/$type'
       path: '/content/$type'
@@ -427,6 +446,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
   AdminInquiriesRoute: typeof AdminInquiriesRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminProjectsRoute: typeof AdminProjectsRoute
@@ -437,6 +457,7 @@ interface AdminRouteChildren {
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
   AdminInquiriesRoute: AdminInquiriesRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
   AdminProjectsRoute: AdminProjectsRoute,
