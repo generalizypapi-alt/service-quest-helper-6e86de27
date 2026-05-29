@@ -5,7 +5,7 @@ import { FileText, Download } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/reports")({
-  component: AdminReports;
+  component: AdminReports,
 });
 
 type Counts = {
