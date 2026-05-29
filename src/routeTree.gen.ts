@@ -24,7 +24,9 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminSystemHealthRouteImport } from './routes/admin.system-health'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminReportsRouteImport } from './routes/admin.reports'
 import { Route as AdminProjectsRouteImport } from './routes/admin.projects'
 import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
 import { Route as AdminInquiriesRouteImport } from './routes/admin.inquiries'
@@ -107,9 +109,19 @@ const AdminUsersRoute = AdminUsersRouteImport.update({
   path: '/users',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminSystemHealthRoute = AdminSystemHealthRouteImport.update({
+  id: '/system-health',
+  path: '/system-health',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminProjectsRoute = AdminProjectsRouteImport.update({
@@ -162,7 +174,9 @@ export interface FileRoutesByFullPath {
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/system-health': typeof AdminSystemHealthRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/content/$type': typeof AdminContentTypeRoute
@@ -185,7 +199,9 @@ export interface FileRoutesByTo {
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/system-health': typeof AdminSystemHealthRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin': typeof AdminIndexRoute
   '/admin/content/$type': typeof AdminContentTypeRoute
@@ -210,7 +226,9 @@ export interface FileRoutesById {
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/payments': typeof AdminPaymentsRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/system-health': typeof AdminSystemHealthRoute
   '/admin/users': typeof AdminUsersRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/content/$type': typeof AdminContentTypeRoute
@@ -236,7 +254,9 @@ export interface FileRouteTypes {
     | '/admin/inquiries'
     | '/admin/payments'
     | '/admin/projects'
+    | '/admin/reports'
     | '/admin/settings'
+    | '/admin/system-health'
     | '/admin/users'
     | '/admin/'
     | '/admin/content/$type'
@@ -259,7 +279,9 @@ export interface FileRouteTypes {
     | '/admin/inquiries'
     | '/admin/payments'
     | '/admin/projects'
+    | '/admin/reports'
     | '/admin/settings'
+    | '/admin/system-health'
     | '/admin/users'
     | '/admin'
     | '/admin/content/$type'
@@ -283,7 +305,9 @@ export interface FileRouteTypes {
     | '/admin/inquiries'
     | '/admin/payments'
     | '/admin/projects'
+    | '/admin/reports'
     | '/admin/settings'
+    | '/admin/system-health'
     | '/admin/users'
     | '/admin/'
     | '/admin/content/$type'
@@ -412,11 +436,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminUsersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/system-health': {
+      id: '/admin/system-health'
+      path: '/system-health'
+      fullPath: '/admin/system-health'
+      preLoaderRoute: typeof AdminSystemHealthRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/settings': {
       id: '/admin/settings'
       path: '/settings'
       fullPath: '/admin/settings'
       preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/projects': {
@@ -470,7 +508,9 @@ interface AdminRouteChildren {
   AdminInquiriesRoute: typeof AdminInquiriesRoute
   AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminProjectsRoute: typeof AdminProjectsRoute
+  AdminReportsRoute: typeof AdminReportsRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminSystemHealthRoute: typeof AdminSystemHealthRoute
   AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminContentTypeRoute: typeof AdminContentTypeRoute
@@ -482,7 +522,9 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminInquiriesRoute: AdminInquiriesRoute,
   AdminPaymentsRoute: AdminPaymentsRoute,
   AdminProjectsRoute: AdminProjectsRoute,
+  AdminReportsRoute: AdminReportsRoute,
   AdminSettingsRoute: AdminSettingsRoute,
+  AdminSystemHealthRoute: AdminSystemHealthRoute,
   AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminContentTypeRoute: AdminContentTypeRoute,
@@ -508,3 +550,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
