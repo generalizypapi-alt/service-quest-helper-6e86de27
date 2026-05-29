@@ -49,8 +49,8 @@ type RoleSlice = { name: string; value: number; color: string };
 type DailyPoint = { day: string; signups: number; inquiries: number; projects: number };
 
 const ROLE_COLORS: Record<string, string> = {
-  admin: "oklch(0.78 0.12 80)",
-  client: "oklch(0.72 0.15 55)",
+  admin: "oklch(0.82 0.18 95)",
+  client: "oklch(0.65 0.15 95)",
 };
 
 function AdminOverview() {
