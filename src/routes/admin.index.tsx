@@ -66,6 +66,7 @@ function AdminOverview() {
   const [roleData, setRoleData] = useState<RoleSlice[]>([]);
   const [series, setSeries] = useState<DailyPoint[]>([]);
   const [recentProjects, setRecentProjects] = useState<any[]>([]);
+  const [milestonesByProject, setMilestonesByProject] = useState<Record<string, { total: number; done: number }>>({});
   const [recentSignups, setRecentSignups] = useState<any[]>([]);
   const [activity, setActivity] = useState<{ icon: any; title: string; sub: string; time: string; color: string }[]>([]);
   const [dbOk, setDbOk] = useState(true);
