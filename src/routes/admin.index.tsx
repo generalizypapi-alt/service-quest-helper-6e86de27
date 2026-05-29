@@ -250,10 +250,10 @@ function AdminOverview() {
             <div className="h-56 -ml-2">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={series} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
-                  <XAxis dataKey="day" tickFormatter={(d) => d.slice(5)} tick={{ fontSize: 10, fill: "oklch(0.7 0.013 50 / 60%)" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 10, fill: "oklch(0.7 0.013 50 / 60%)" }} axisLine={false} tickLine={false} width={28} allowDecimals={false} />
-                  <Tooltip contentStyle={{ background: "oklch(0.2 0.013 50)", border: "1px solid oklch(1 0 0 / 10%)", borderRadius: 8, fontSize: 12 }} />
-                  <Line type="monotone" dataKey={seriesMode} name={seriesLabel} stroke="oklch(0.72 0.15 55)" strokeWidth={2.5} dot={{ r: 3 }} />
+                  <XAxis dataKey="day" tickFormatter={(d) => d.slice(5)} tick={{ fontSize: 10, fill: "oklch(0.7 0.005 95 / 60%)" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 10, fill: "oklch(0.7 0.005 95 / 60%)" }} axisLine={false} tickLine={false} width={28} allowDecimals={false} />
+                  <Tooltip contentStyle={{ background: "oklch(0.22 0.004 90)", border: "1px solid oklch(1 0 0 / 10%)", borderRadius: 8, fontSize: 12 }} />
+                  <Line type="monotone" dataKey={seriesMode} name={seriesLabel} stroke="oklch(0.82 0.18 95)" strokeWidth={2.5} dot={{ r: 3 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
