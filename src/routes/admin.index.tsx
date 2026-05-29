@@ -49,8 +49,8 @@ type RoleSlice = { name: string; value: number; color: string };
 type DailyPoint = { day: string; signups: number; inquiries: number; projects: number };
 
 const ROLE_COLORS: Record<string, string> = {
-  admin: "oklch(0.78 0.12 80)",
-  client: "oklch(0.72 0.15 55)",
+  admin: "oklch(0.82 0.18 95)",
+  client: "oklch(0.65 0.15 95)",
 };
 
 function AdminOverview() {
@@ -66,6 +66,7 @@ function AdminOverview() {
   const [roleData, setRoleData] = useState<RoleSlice[]>([]);
   const [series, setSeries] = useState<DailyPoint[]>([]);
   const [recentProjects, setRecentProjects] = useState<any[]>([]);
+  const [milestonesByProject, setMilestonesByProject] = useState<Record<string, { total: number; done: number }>>({});
   const [recentSignups, setRecentSignups] = useState<any[]>([]);
   const [activity, setActivity] = useState<{ icon: any; title: string; sub: string; time: string; color: string }[]>([]);
   const [dbOk, setDbOk] = useState(true);
@@ -147,6 +148,25 @@ function AdminOverview() {
         setRecentProjects(recentProj.data ?? []);
         setRecentSignups((profiles.data ?? []).slice(-5).reverse());
 
+        // real milestone progress for recent projects
+        const ids = (recentProj.data ?? []).map((p: any) => p.id);
+        if (ids.length) {
+          const { data: ms } = await supabase
+            .from("project_milestones")
+            .select("project_id, status")
+            .in("project_id", ids);
+          const map: Record<string, { total: number; done: number }> = {};
+          for (const m of ms ?? []) {
+            const k = (m as any).project_id as string;
+            map[k] ??= { total: 0, done: 0 };
+            map[k].total += 1;
+            if ((m as any).status === "done") map[k].done += 1;
+          }
+          setMilestonesByProject(map);
+        } else {
+          setMilestonesByProject({});
+        }
+
         // activity feed: union
         const items: any[] = [];
         for (const p of recentProj.data ?? []) items.push({ icon: FolderKanban, title: "Project updated", sub: p.title, time: p.created_at, color: "text-sky-500 bg-sky-500/15" });
@@ -166,16 +186,20 @@ function AdminOverview() {
       .on("postgres_changes", { event: "*", schema: "public", table: "client_projects" }, load)
       .on("postgres_changes", { event: "*", schema: "public", table: "project_inquiries" }, load)
       .on("postgres_changes", { event: "*", schema: "public", table: "profiles" }, load)
+      .on("postgres_changes", { event: "*", schema: "public", table: "project_milestones" }, load)
       .subscribe();
     return () => { supabase.removeChannel(c); };
   }, []);
 
   const totalProgress = useMemo(() => {
-    return recentProjects.map((p) => ({
-      ...p,
-      progress: p.stage === "completed" ? 100 : p.stage === "in_progress" ? 65 : p.stage === "accepted" ? 25 : 0,
-    }));
-  }, [recentProjects]);
+    return recentProjects.map((p) => {
+      const m = milestonesByProject[p.id];
+      const progress = m && m.total > 0
+        ? Math.round((m.done / m.total) * 100)
+        : p.stage === "completed" ? 100 : 0;
+      return { ...p, progress };
+    });
+  }, [recentProjects, milestonesByProject]);
 
   const hour = new Date().getHours();
   const greeting = hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
@@ -226,10 +250,10 @@ function AdminOverview() {
             <div className="h-56 -ml-2">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={series} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
-                  <XAxis dataKey="day" tickFormatter={(d) => d.slice(5)} tick={{ fontSize: 10, fill: "oklch(0.7 0.013 50 / 60%)" }} axisLine={false} tickLine={false} />
-                  <YAxis tick={{ fontSize: 10, fill: "oklch(0.7 0.013 50 / 60%)" }} axisLine={false} tickLine={false} width={28} allowDecimals={false} />
-                  <Tooltip contentStyle={{ background: "oklch(0.2 0.013 50)", border: "1px solid oklch(1 0 0 / 10%)", borderRadius: 8, fontSize: 12 }} />
-                  <Line type="monotone" dataKey={seriesMode} name={seriesLabel} stroke="oklch(0.72 0.15 55)" strokeWidth={2.5} dot={{ r: 3 }} />
+                  <XAxis dataKey="day" tickFormatter={(d) => d.slice(5)} tick={{ fontSize: 10, fill: "oklch(0.7 0.005 95 / 60%)" }} axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 10, fill: "oklch(0.7 0.005 95 / 60%)" }} axisLine={false} tickLine={false} width={28} allowDecimals={false} />
+                  <Tooltip contentStyle={{ background: "oklch(0.22 0.004 90)", border: "1px solid oklch(1 0 0 / 10%)", borderRadius: 8, fontSize: 12 }} />
+                  <Line type="monotone" dataKey={seriesMode} name={seriesLabel} stroke="oklch(0.82 0.18 95)" strokeWidth={2.5} dot={{ r: 3 }} />
                 </LineChart>
               </ResponsiveContainer>
             </div>
@@ -382,10 +406,9 @@ function AdminOverview() {
         <section className="rounded-2xl bg-card ring-1 ring-ink/10 p-5">
           <h3 className="font-semibold text-sm mb-4">System Health</h3>
           <ul className="space-y-3">
-            <HealthRow icon={Server} label="App Server" ok />
             <HealthRow icon={Database} label="Database" ok={dbOk} />
-            <HealthRow icon={Activity} label="Realtime" ok />
           </ul>
+          <Link to="/admin/system-health" className="text-xs text-brand hover:underline mt-3 inline-block">Open status →</Link>
         </section>
       </aside>
     </div>

@@ -23,9 +23,15 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
+import { Route as AdminUsersRouteImport } from './routes/admin.users'
+import { Route as AdminSystemHealthRouteImport } from './routes/admin.system-health'
 import { Route as AdminSettingsRouteImport } from './routes/admin.settings'
+import { Route as AdminReportsRouteImport } from './routes/admin.reports'
 import { Route as AdminProjectsRouteImport } from './routes/admin.projects'
+import { Route as AdminPaymentsRouteImport } from './routes/admin.payments'
 import { Route as AdminInquiriesRouteImport } from './routes/admin.inquiries'
+import { Route as AdminAnnouncementsRouteImport } from './routes/admin.announcements'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 import { Route as AdminContentTypeRouteImport } from './routes/admin.content.$type'
 
 const ThankYouRoute = ThankYouRouteImport.update({
@@ -98,9 +104,24 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
   path: '/',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminUsersRoute = AdminUsersRouteImport.update({
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminSystemHealthRoute = AdminSystemHealthRouteImport.update({
+  id: '/system-health',
+  path: '/system-health',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminSettingsRoute = AdminSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminReportsRoute = AdminReportsRouteImport.update({
+  id: '/reports',
+  path: '/reports',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminProjectsRoute = AdminProjectsRouteImport.update({
@@ -108,9 +129,24 @@ const AdminProjectsRoute = AdminProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminPaymentsRoute = AdminPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminInquiriesRoute = AdminInquiriesRouteImport.update({
   id: '/inquiries',
   path: '/inquiries',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnnouncementsRoute = AdminAnnouncementsRouteImport.update({
+  id: '/announcements',
+  path: '/announcements',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
   getParentRoute: () => AdminRoute,
 } as any)
 const AdminContentTypeRoute = AdminContentTypeRouteImport.update({
@@ -133,9 +169,15 @@ export interface FileRoutesByFullPath {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/announcements': typeof AdminAnnouncementsRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/system-health': typeof AdminSystemHealthRoute
+  '/admin/users': typeof AdminUsersRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/content/$type': typeof AdminContentTypeRoute
 }
@@ -152,9 +194,15 @@ export interface FileRoutesByTo {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/announcements': typeof AdminAnnouncementsRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/system-health': typeof AdminSystemHealthRoute
+  '/admin/users': typeof AdminUsersRoute
   '/admin': typeof AdminIndexRoute
   '/admin/content/$type': typeof AdminContentTypeRoute
 }
@@ -173,9 +221,15 @@ export interface FileRoutesById {
   '/signup': typeof SignupRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/thank-you': typeof ThankYouRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
+  '/admin/announcements': typeof AdminAnnouncementsRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
+  '/admin/payments': typeof AdminPaymentsRoute
   '/admin/projects': typeof AdminProjectsRoute
+  '/admin/reports': typeof AdminReportsRoute
   '/admin/settings': typeof AdminSettingsRoute
+  '/admin/system-health': typeof AdminSystemHealthRoute
+  '/admin/users': typeof AdminUsersRoute
   '/admin/': typeof AdminIndexRoute
   '/admin/content/$type': typeof AdminContentTypeRoute
 }
@@ -195,9 +249,15 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/thank-you'
+    | '/admin/analytics'
+    | '/admin/announcements'
     | '/admin/inquiries'
+    | '/admin/payments'
     | '/admin/projects'
+    | '/admin/reports'
     | '/admin/settings'
+    | '/admin/system-health'
+    | '/admin/users'
     | '/admin/'
     | '/admin/content/$type'
   fileRoutesByTo: FileRoutesByTo
@@ -214,9 +274,15 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/thank-you'
+    | '/admin/analytics'
+    | '/admin/announcements'
     | '/admin/inquiries'
+    | '/admin/payments'
     | '/admin/projects'
+    | '/admin/reports'
     | '/admin/settings'
+    | '/admin/system-health'
+    | '/admin/users'
     | '/admin'
     | '/admin/content/$type'
   id:
@@ -234,9 +300,15 @@ export interface FileRouteTypes {
     | '/signup'
     | '/sitemap.xml'
     | '/thank-you'
+    | '/admin/analytics'
+    | '/admin/announcements'
     | '/admin/inquiries'
+    | '/admin/payments'
     | '/admin/projects'
+    | '/admin/reports'
     | '/admin/settings'
+    | '/admin/system-health'
+    | '/admin/users'
     | '/admin/'
     | '/admin/content/$type'
   fileRoutesById: FileRoutesById
@@ -357,11 +429,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminIndexRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/users': {
+      id: '/admin/users'
+      path: '/users'
+      fullPath: '/admin/users'
+      preLoaderRoute: typeof AdminUsersRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/system-health': {
+      id: '/admin/system-health'
+      path: '/system-health'
+      fullPath: '/admin/system-health'
+      preLoaderRoute: typeof AdminSystemHealthRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/settings': {
       id: '/admin/settings'
       path: '/settings'
       fullPath: '/admin/settings'
       preLoaderRoute: typeof AdminSettingsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/reports': {
+      id: '/admin/reports'
+      path: '/reports'
+      fullPath: '/admin/reports'
+      preLoaderRoute: typeof AdminReportsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/projects': {
@@ -371,11 +464,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminProjectsRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/payments': {
+      id: '/admin/payments'
+      path: '/payments'
+      fullPath: '/admin/payments'
+      preLoaderRoute: typeof AdminPaymentsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/inquiries': {
       id: '/admin/inquiries'
       path: '/inquiries'
       fullPath: '/admin/inquiries'
       preLoaderRoute: typeof AdminInquiriesRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/announcements': {
+      id: '/admin/announcements'
+      path: '/announcements'
+      fullPath: '/admin/announcements'
+      preLoaderRoute: typeof AdminAnnouncementsRouteImport
+      parentRoute: typeof AdminRoute
+    }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
       parentRoute: typeof AdminRoute
     }
     '/admin/content/$type': {
@@ -389,17 +503,29 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
+  AdminAnnouncementsRoute: typeof AdminAnnouncementsRoute
   AdminInquiriesRoute: typeof AdminInquiriesRoute
+  AdminPaymentsRoute: typeof AdminPaymentsRoute
   AdminProjectsRoute: typeof AdminProjectsRoute
+  AdminReportsRoute: typeof AdminReportsRoute
   AdminSettingsRoute: typeof AdminSettingsRoute
+  AdminSystemHealthRoute: typeof AdminSystemHealthRoute
+  AdminUsersRoute: typeof AdminUsersRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AdminContentTypeRoute: typeof AdminContentTypeRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
+  AdminAnnouncementsRoute: AdminAnnouncementsRoute,
   AdminInquiriesRoute: AdminInquiriesRoute,
+  AdminPaymentsRoute: AdminPaymentsRoute,
   AdminProjectsRoute: AdminProjectsRoute,
+  AdminReportsRoute: AdminReportsRoute,
   AdminSettingsRoute: AdminSettingsRoute,
+  AdminSystemHealthRoute: AdminSystemHealthRoute,
+  AdminUsersRoute: AdminUsersRoute,
   AdminIndexRoute: AdminIndexRoute,
   AdminContentTypeRoute: AdminContentTypeRoute,
 }
