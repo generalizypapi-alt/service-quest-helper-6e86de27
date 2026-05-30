@@ -144,8 +144,14 @@ function HomePage() {
       </section>
 
 
-      {/* Metrics band */}
-      <Metrics heading="A studio and an academy, in numbers." />
+      {/* Launch tagline */}
+      <section className="border-y border-ink/5 bg-surface">
+        <div className="max-w-7xl mx-auto px-6 py-10 text-center">
+          <p className="text-base md:text-lg font-medium tracking-tight text-ink/80">
+            Launching June 1st, 2026 — built from the ground up, with intention.
+          </p>
+        </div>
+      </section>
 
       {/* Two offerings */}
       <section className="py-24 bg-secondary border-y border-ink/5">
@@ -213,9 +219,9 @@ function HomePage() {
                   highlight: p.featured,
                 }))
               : [
-                  { tier: "Starter Site", price: "From $800", period: "/ 1 week", desc: "A polished landing page with a contact form and analytics.", cta: "Inquire", highlight: false },
-                  { tier: "Business Site", price: "From $2,500", period: "/ 2 weeks", desc: "Multi-page marketing site with CMS, forms, and integrations.", cta: "Book Consultation", highlight: true },
-                  { tier: "Custom Software", price: "Custom", period: "Quote", desc: "Internal tools, dashboards, and SaaS MVPs scoped around your business.", cta: "Contact", highlight: false },
+                  { tier: "Starter Site", price: "From ₦150,000", period: "/ 1 week", desc: "A polished landing page with a contact form and analytics.", cta: "Inquire", highlight: false },
+                  { tier: "Business Site", price: "From ₦400,000", period: "/ 2 weeks", desc: "Multi-page marketing site with CMS, forms, and integrations.", cta: "Book Consultation", highlight: true },
+                  { tier: "Custom Software", price: "Custom Quote", period: "Quote", desc: "Internal tools, dashboards, and SaaS MVPs scoped around your business.", cta: "Contact", highlight: false },
                 ]
             ).map((c) => (
               <PricingCard key={c.tier} {...c} />
