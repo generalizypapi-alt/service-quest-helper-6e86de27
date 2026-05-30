@@ -28,9 +28,8 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 bg-surface/75 backdrop-blur-xl border-b border-ink/5">
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center gap-2 text-xl font-semibold tracking-tight text-ink">
-          <span className="inline-flex size-7 items-center justify-center rounded-md bg-ink text-surface text-[11px] font-bold">O</span>
-          OKIKE
+        <Link to="/" className="flex items-center" aria-label="OKIKE home">
+          <img src={okikeLogo} alt="OKIKE" className="h-7 w-auto" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-1 bg-ink/[0.03] ring-1 ring-ink/5 rounded-full px-2 py-1">
