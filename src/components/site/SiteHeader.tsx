@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
+import okikeLogo from "@/assets/okike-logo.png";
 import { useState } from "react";
 import { Menu, X, User as UserIcon, LogOut, LayoutDashboard, Shield, ArrowUpRight } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
