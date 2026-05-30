@@ -1,4 +1,5 @@
 import { createFileRoute, Link, Outlet, useLocation, useNavigate } from "@tanstack/react-router";
+import okikeLogo from "@/assets/okike-logo.png";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import {
@@ -68,7 +69,7 @@ function AdminLayout() {
   const SidebarNav = (
     <>
       <div className="px-1">
-        <Link to="/" className="block text-2xl font-bold tracking-tight text-brand">OKIKE</Link>
+        <Link to="/" className="block" aria-label="OKIKE home"><img src={okikeLogo} alt="OKIKE" className="h-8 w-auto" /></Link>
         <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mt-0.5">Admin Console</div>
       </div>
 

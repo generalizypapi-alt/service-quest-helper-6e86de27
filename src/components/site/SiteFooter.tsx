@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Mail, MapPin, Phone, Instagram, Linkedin, Twitter, Github } from "lucide-react";
+import okikeLogo from "@/assets/okike-logo.png";
 
 export function SiteFooter() {
   return (
@@ -28,7 +29,7 @@ export function SiteFooter() {
       {/* Main grid */}
       <div className="max-w-7xl mx-auto px-6 py-16 grid gap-12 md:grid-cols-12">
         <div className="md:col-span-5 flex flex-col gap-6">
-          <Link to="/" className="text-2xl font-semibold tracking-tight text-contrast-foreground">OKIKE</Link>
+          <Link to="/" className="inline-flex" aria-label="OKIKE home"><img src={okikeLogo} alt="OKIKE" className="h-8 w-auto" /></Link>
           <p className="text-sm text-contrast-foreground/60 max-w-sm leading-relaxed">
             A founder-led studio building software, AI tools and digital products that solve real problems — and training the next generation of African engineers.
           </p>
