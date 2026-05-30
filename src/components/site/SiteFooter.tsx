@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight, Mail, MapPin, Phone, Instagram, Linkedin, Twitter, Github } from "lucide-react";
+import okikeLogo from "@/assets/okike-logo.png";
 
 export function SiteFooter() {
   return (
